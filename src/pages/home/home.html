@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+  <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Janeiro 2017</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <button ion-item>
+    <ion-item>
+      <ion-icon name="clock" item-left></ion-icon>
+      <span>Horas:</span>
+      <span item-right>{{formatHour(reportSumary.hours, reportSumary.minutes)}}</span>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="book" item-left></ion-icon>
+      <span>{{reportSumary.publications}} Publicações</span>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="film" item-left></ion-icon>
+      {{reportSumary.videos}} Vídeos
+    </ion-item>
+    <ion-item>
+      <ion-icon name="bookmark" item-left></ion-icon>
+      {{reportSumary.revisits}} Revisistas
+    </ion-item>
+    <ion-item>
+      <ion-icon name="school" item-left></ion-icon>
+      {{reportSumary.studies}} Estudos
+    </ion-item>
+  </button>
+
+  <ion-item-divider color="light">
+    Minhas Metas
+  </ion-item-divider>
+  <ion-fab bottom right (click)="onAddClick()">
+    <button ion-fab><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+</ion-content>

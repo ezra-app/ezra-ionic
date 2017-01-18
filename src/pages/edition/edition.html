@@ -1,0 +1,62 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Janeiro 2017</ion-title>
+    <ion-buttons end padding>
+      <button ion-button icon-only end (click)="onConfirmClick()">
+        <ion-icon name="done-all"></ion-icon>
+      </button>
+      <button ion-button icon-only end (click)="onCancelClick()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-row>
+        <ion-item>
+          <ion-icon name="clock" item-left></ion-icon>
+          <ion-label stacked>Horas</ion-label>
+          <ion-input [(ngModel)]="report.hours" type="number"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Minutos</ion-label>
+          <ion-input [(ngModel)]="report.minutes" type="number"></ion-input>
+        </ion-item>
+      </ion-row>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <ion-icon name="book" item-left></ion-icon>
+        <ion-label stacked>Publicações</ion-label>
+        <ion-input [(ngModel)]="report.publications" type="number"></ion-input>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <ion-icon name="film" item-left></ion-icon>
+        <ion-label stacked>Vídeos</ion-label>
+        <ion-input [(ngModel)]="report.videos" type="number"></ion-input>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <ion-icon name="bookmark" item-left></ion-icon>
+        <ion-label stacked>Revisitas</ion-label>
+        <ion-input [(ngModel)]="report.revisits" type="number"></ion-input>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <ion-icon name="school" item-left></ion-icon>
+        <ion-label stacked>Estudos</ion-label>
+        <ion-input [(ngModel)]="report.studies" type="number"></ion-input>
+      </ion-item>
+    </ion-row>
+  </ion-grid>
+</ion-content>
