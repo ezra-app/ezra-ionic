@@ -12,27 +12,27 @@
     <ion-item>
       <ion-icon name="clock" item-left></ion-icon>
       <span>Horas:</span>
-      <span item-right>{{formatHour(reportSumary.hours, reportSumary.minutes)}}</span>
+      <span item-right>{{normalizeHour(reportSumary.hours)}} : {{normalizeHour(reportSumary.minutes)}}</span>
     </ion-item>
     <ion-item>
       <ion-icon name="book" item-left></ion-icon>
       <span>Publicações:</span>
-      <span  item-right>{{reportSumary.publications}}</span>
+      <span  item-right>{{formatNumber(reportSumary.publications)}}</span>
     </ion-item>
     <ion-item>
       <ion-icon name="film" item-left></ion-icon>
       <span>Víceos:</span>
-      <span item-right>{{reportSumary.videos}}</span>
+      <span item-right>{{formatNumber(reportSumary.videos)}}</span>
     </ion-item>
     <ion-item>
       <ion-icon name="bookmark" item-left></ion-icon>
       <span>Revisistas:</span>
-      <span item-right>{{reportSumary.revisits}}</span>
+      <span item-right>{{formatNumber(reportSumary.revisits)}}</span>
     </ion-item>
     <ion-item>
       <ion-icon name="school" item-left></ion-icon>
       <span>Estudos:</span>
-      <span item-right>{{reportSumary.studies}}</span>
+      <span item-right>{{formatNumber(reportSumary.studies)}}</span>
     </ion-item>
   </button>
 

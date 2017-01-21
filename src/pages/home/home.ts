@@ -22,7 +22,7 @@ export class HomePage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public modalCtrl: ModalController, public reportService: ReportService,
     public viewCtrl: ViewController, public events: Events) {
-      
+
     this.loadReports();
     events.subscribe('report:created', () => {
       console.log('Welcome');
@@ -48,14 +48,22 @@ export class HomePage {
     modal.present();
   }
 
-  formatHour(hour: number, minute: number): string {
-    if (!hour) {
-      hour = 0;
+  formatNumber(value: number): string {
+    if (value == undefined || isNaN(value)) {
+      return '0';
+    } else {
+      return value.toString();
     }
-    if (!minute) {
-      minute = 0;
+  }
+
+  normalizeHour(hour: string): string {
+    if (hour == undefined) {
+      return '00';
+    } else if (hour.length == 1) {
+      return '0' + hour;
+    } else {
+      return hour;
     }
-    return `${hour + ":" + minute}`;
   }
 
 }

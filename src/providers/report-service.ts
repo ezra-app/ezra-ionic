@@ -1,7 +1,7 @@
+import 'rxjs/add/operator/map';
 import { ReportModel } from '../models/report-model';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 
 /*
@@ -31,22 +31,32 @@ export class ReportService {
   async loadReports(): Promise<ReportModel> {
     let reports: ReportModel[] = await this.storage.get('reports:list') as ReportModel[];
     if (reports) {
-      console.log("returned reports 0", reports[reports.length-1].hours);
+      console.log("returned reports 0", reports[reports.length - 1].hours);
       return reports.reduce((prev, curr, currIndex, array) => {
-          var reportSumary = new ReportModel();
-      reportSumary.hours = (parseInt(prev.hours) + parseInt(curr.hours)).toString();
-      reportSumary.minutes = (parseInt(prev.minutes)  + parseInt(curr.minutes)).toString();
-      reportSumary.publications = (parseInt(prev.publications) + parseInt(curr.publications)).toString();
-      reportSumary.revisits = (parseInt(prev.revisits) + parseInt(curr.revisits)).toString();
-      reportSumary.studies = (parseInt(prev.studies) + parseInt(curr.studies)).toString();
-      reportSumary.videos = (parseInt(prev.videos) + parseInt(curr.videos)).toString();
+        var reportSumary = new ReportModel();
+        reportSumary.hours = this.sumAsNumber(prev.hours, curr.hours);
+        reportSumary.minutes = this.sumAsNumber(prev.minutes, curr.minutes);
+        reportSumary.publications = this.sumAsNumber(prev.publications, curr.publications);
+        reportSumary.revisits = this.sumAsNumber(prev.revisits, curr.revisits);
+        reportSumary.studies = this.sumAsNumber(prev.studies, curr.studies);
+        reportSumary.videos = this.sumAsNumber(prev.videos, curr.videos);
 
-      return reportSumary;
+        return reportSumary;
       });
     } else {
       console.log("returned new report");
       return new ReportModel();
     }
+  }
+
+  sumAsNumber(...values: any[]): string {
+    var result: number = 0;
+    values.forEach(value => {
+      if (value && !isNaN(value)) {
+        result += parseInt(value);
+      }
+    });
+    return result.toString();
   }
 
 }
