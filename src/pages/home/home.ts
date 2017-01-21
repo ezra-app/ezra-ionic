@@ -1,10 +1,9 @@
-import { ReportService } from '../../providers/report-service';
 import { ReportModel } from '../../models/report-model';
+import { ReportService } from '../../providers/report-service';
 import { EditionPage } from './../edition/edition';
 import { Component } from '@angular/core';
 import { Events, NavController, NavParams, ViewController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
-import { ModalPage } from './modal-page';
 
 /*
   Generated class for the Home page.
