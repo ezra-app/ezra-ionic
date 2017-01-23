@@ -1,3 +1,4 @@
+import { ReportListPage } from '../report-list/report-list';
 import { ReportModel } from '../../models/report-model';
 import { ReportService } from '../../providers/report-service';
 import { EditionPage } from './../edition/edition';
@@ -31,7 +32,7 @@ export class HomePage {
   }
 
   loadReports(): void {
-    this.reportService.loadReports().then(r => {
+    this.reportService.loadReportsSumary().then(r => {
       this.reportSumary = r;
       console.log(r);
     }).catch((err => {
@@ -64,6 +65,10 @@ export class HomePage {
     } else {
       return hour;
     }
+  }
+
+  onReportSumaryClick(): void {
+    this.navCtrl.push(ReportListPage);
   }
 
 }

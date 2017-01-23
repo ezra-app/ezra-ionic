@@ -17,7 +17,7 @@ export class ReportService {
     console.log('Hello ReportService Provider');
   }
 
-  async saveReport(report: ReportModel) {
+  public async saveReport(report: ReportModel) {
     let reports: ReportModel[] = await this.storage.get('reports:list') as ReportModel[];
     if (!reports) {
       reports = [];
@@ -28,7 +28,7 @@ export class ReportService {
     console.log(reports);
   }
 
-  async loadReports(): Promise<ReportModel> {
+  public async loadReportsSumary(): Promise<ReportModel> {
     let reports: ReportModel[] = await this.storage.get('reports:list') as ReportModel[];
     if (reports) {
       console.log("returned reports 0", reports[reports.length - 1].hours);
@@ -48,8 +48,12 @@ export class ReportService {
       return new ReportModel();
     }
   }
+  
+  public async loadAllReports(): Promise<ReportModel[]> {
+    return await this.storage.get('reports:list') as ReportModel[];
+  }
 
-  sumAsNumber(...values: any[]): string {
+  private sumAsNumber(...values: any[]): string {
     var result: number = 0;
     values.forEach(value => {
       if (value && !isNaN(value)) {

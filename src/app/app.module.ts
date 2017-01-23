@@ -1,3 +1,4 @@
+import { ReportListPage } from '../pages/report-list/report-list';
 import { ReportService } from '../providers/report-service';
 import { EditionPage } from './../pages/edition/edition';
 import { NgModule, ErrorHandler } from '@angular/core';
@@ -12,6 +13,7 @@ import { Storage } from '@ionic/storage';
     MyApp,
     HomePage,
     EditionPage,
+    ReportListPage,
     Page2
   ],
   imports: [
@@ -22,6 +24,7 @@ import { Storage } from '@ionic/storage';
     MyApp,
     HomePage,
     EditionPage,
+    ReportListPage,
     Page2
   ],
   providers: [
