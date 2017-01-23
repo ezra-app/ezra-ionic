@@ -1,3 +1,4 @@
+import { ReportListPage } from '../pages/report-list/report-list';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
@@ -14,15 +15,16 @@ export class MyApp {
 
   rootPage: any = HomePage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{title: string, component: any, icon?: string}>;
 
   constructor(public platform: Platform) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Page One', component: HomePage },
-      { title: 'Page Two', component: Page2 }
+      { title: 'Início', component: HomePage, icon: "home" },
+      { title: 'Detalhe', component: ReportListPage, icon: "list" },
+      { title: 'Page Two', component: Page2, icon: "game" },
     ];
 
   }

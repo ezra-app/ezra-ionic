@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-  <button ion-button menuToggle>
+    <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Janeiro 2017</ion-title>
@@ -8,11 +8,11 @@
 </ion-header>
 
 <ion-content>
-  <button ion-item>
+  <button ion-item (click)="onReportSumaryClick()">
     <ion-item>
       <ion-icon name="clock" item-left></ion-icon>
       <span>Horas:</span>
-      <span item-right>{{normalizeHour(reportSumary.hours)}} : {{normalizeHour(reportSumary.minutes)}}</span>
+      <span item-right>{{normalizeHour(reportSumary.hours)}}:{{normalizeHour(reportSumary.minutes)}}</span>
     </ion-item>
     <ion-item>
       <ion-icon name="book" item-left></ion-icon>
@@ -21,7 +21,7 @@
     </ion-item>
     <ion-item>
       <ion-icon name="film" item-left></ion-icon>
-      <span>Víceos:</span>
+      <span>Vídeos:</span>
       <span item-right>{{formatNumber(reportSumary.videos)}}</span>
     </ion-item>
     <ion-item>
@@ -39,6 +39,11 @@
   <ion-item-divider color="light">
     Minhas Metas
   </ion-item-divider>
+  <ion-item padding>
+    Minha meta é 50 horas <br>
+    Preciso de 2 horas por dia <br>
+    Faltam 10 horas para acabar
+  </ion-item >
   <ion-fab bottom right (click)="onAddClick()">
     <button ion-fab><ion-icon name="add"></ion-icon></button>
   </ion-fab>
