@@ -17,10 +17,17 @@ import { Events } from 'ionic-angular';
 export class EditionPage {
 
   report: ReportModel = new ReportModel();
+  editing: boolean;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, public viewCtrl: ViewController, 
-    public reportService: ReportService, public events: Events) {}
+    public reportService: ReportService, public events: Events) {
+      if(navParams.get("report")) {
+        this.editing = true;
+        this.report = navParams.get("report");
+      }
+
+    }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditionPage');
