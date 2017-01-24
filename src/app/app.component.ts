@@ -1,10 +1,12 @@
-import { ReportListPage } from '../pages/report-list/report-list';
-import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
-import { StatusBar, Splashscreen } from 'ionic-native';
-
 import { HomePage } from '../pages/home/home';
 import { Page2 } from '../pages/page2/page2';
+import { ReportListPage } from '../pages/report-list/report-list';
+import { GoalsPage } from './../pages/goals/goals';
+import { SettingsPage } from './../pages/settings/settings';
+import { Component, ViewChild } from '@angular/core';
+import { Nav, Platform } from 'ionic-angular';
+import { Splashscreen, StatusBar } from 'ionic-native';
+
 
 
 @Component({
@@ -14,7 +16,6 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
-
   pages: Array<{title: string, component: any, icon?: string}>;
 
   constructor(public platform: Platform) {
@@ -24,6 +25,8 @@ export class MyApp {
     this.pages = [
       { title: 'Início', component: HomePage, icon: "home" },
       { title: 'Detalhe', component: ReportListPage, icon: "list" },
+      { title: 'Metas', component: GoalsPage, icon: "football" },
+      { title: 'Configurações', component: SettingsPage, icon: "settings" },
       { title: 'Page Two', component: Page2, icon: "game" },
     ];
 

@@ -1,3 +1,5 @@
+import { SettingsPage } from './../pages/settings/settings';
+import { GoalsPage } from './../pages/goals/goals';
 import { ReportListPage } from '../pages/report-list/report-list';
 import { ReportService } from '../providers/report-service';
 import { EditionPage } from './../pages/edition/edition';
@@ -14,7 +16,9 @@ import { Storage } from '@ionic/storage';
     HomePage,
     EditionPage,
     ReportListPage,
-    Page2
+    Page2,
+    GoalsPage,
+    SettingsPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -25,7 +29,9 @@ import { Storage } from '@ionic/storage';
     HomePage,
     EditionPage,
     ReportListPage,
-    Page2
+    Page2,
+    GoalsPage,
+    SettingsPage
   ],
   providers: [
       {provide: ErrorHandler, useClass: IonicErrorHandler}, 
