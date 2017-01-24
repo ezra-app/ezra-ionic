@@ -1,3 +1,4 @@
+import { SettingsPage } from './../settings/settings';
 import { ReportListPage } from '../report-list/report-list';
 import { ReportModel } from '../../models/report-model';
 import { ReportService } from '../../providers/report-service';
@@ -17,8 +18,9 @@ import { ModalController } from 'ionic-angular';
   templateUrl: 'home.html'
 })
 export class HomePage {
-
   reportSumary: ReportModel = new ReportModel();
+  activityCounterIcon: string = 'play';
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public modalCtrl: ModalController, public reportService: ReportService,
@@ -69,6 +71,18 @@ export class HomePage {
 
   onReportSumaryClick(): void {
     this.navCtrl.push(ReportListPage);
+  }
+
+  onActivityCounterClick(): void {
+    if(this.activityCounterIcon == 'play') {
+      this.activityCounterIcon = 'pause';
+    } else {
+      this.activityCounterIcon = 'play';
+    }
+  }
+
+  onSettingsButtonClick(): void {
+    this.navCtrl.push(SettingsPage);
   }
 
 }
