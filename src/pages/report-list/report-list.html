@@ -18,7 +18,7 @@
 
 <ion-content padding>
 
-  <ion-list>
+  <!--<ion-list>
     <button ion-item *ngFor="let report of reports" (click)="itemSelected(report)">
       <div> 
          Horas: {{ report.hours }} <br>
@@ -30,6 +30,33 @@
    
 
   </button>
-  </ion-list>
+  </ion-list>-->
+  <ion-card *ngFor="let report of reports">
+    <ion-card-content>
+      <ion-card-title>
+        Dia: :D
+      </ion-card-title>
+      <ion-row>
+        <ion-icon name="clock" padding-right></ion-icon> Horas: {{ report.hours }} <br>
+        <ion-icon name="book" padding-right padding-left></ion-icon> Publicações: {{ report.publications }} <br>
+        <ion-icon name="film" padding-right padding-left></ion-icon>Vídeos: {{ report.videos }} <br>
+      </ion-row>
+      <ion-row>
+        <ion-icon name="bookmark" padding-right></ion-icon>Revisitas: {{ report.revisits }} <br>
+        <ion-icon name="school" padding-right padding-left></ion-icon>Estudos: {{ report.studies }} <br>
+      </ion-row>
+
+    </ion-card-content>
+    <ion-row no-padding>
+      <button ion-button clear small color="primary" icon-left (click)="itemSelected(report)">
+        <ion-icon name='create'></ion-icon>
+          Editar
+        </button>
+      <button ion-button clear small color="danger" icon-left>
+        <ion-icon name='trash'></ion-icon>
+          Remover
+        </button>
+    </ion-row>
+  </ion-card>
 
 </ion-content>
