@@ -20,22 +20,6 @@
 
   <!--<ion-list>
     <button ion-item *ngFor="let report of reports" (click)="itemSelected(report)">
-      <div> 
-         Horas: {{ report.hours }} <br>
-         Publicações: {{ report.publications }} <br>
-         Vídeos: {{report.videos}} <br>
-         Revisitas: {{ report.revisits}} <br>
-         Estudos: {{ report.studies}}
-      </div>
-   
-
-  </button>
-  </ion-list>-->
-  <ion-card *ngFor="let report of reports">
-    <ion-card-content>
-      <ion-card-title background="green">
-        Dia: :D
-      </ion-card-title>
       <ion-row>
         <ion-icon name="clock" padding-right></ion-icon>{{ report.hours }} <br>
         <ion-icon name="book" padding-right padding-left></ion-icon>{{ report.publications }} <br>
@@ -45,13 +29,37 @@
         <ion-icon name="bookmark" padding-right></ion-icon>{{ report.revisits }} <br>
         <ion-icon name="school" padding-right padding-left></ion-icon>{{ report.studies }} <br>
       </ion-row>
-    </ion-card-content>
-    <ion-row no-padding>
+      <ion-row no-padding>
       <button ion-button clear small color="primary" icon-left (click)="itemSelected(report)">
         <ion-icon name='create'></ion-icon>
           Editar
         </button>
       <button ion-button clear small color="danger" icon-left>
+        <ion-icon name='trash'></ion-icon>
+          Remover
+        </button>
+      </ion-row>
+    </button>
+  </ion-list>-->
+  <ion-card *ngFor="let report of reports">
+    <ion-card-content no-padding>
+      <ion-item-divider color="navBarColor">
+        Dia: 10
+      </ion-item-divider>
+      <ion-row padding>
+        <ion-icon name="clock" padding-right></ion-icon>{{ report.hours }} <br>
+        <ion-icon name="book" padding-right padding-left></ion-icon>{{ report.publications }} <br>
+        <ion-icon name="film" padding-right padding-left></ion-icon>{{ report.videos }} <br>
+         <ion-icon name="bookmark" padding-right padding-left></ion-icon>{{ report.revisits }} <br>
+        <ion-icon name="school" padding-right padding-left></ion-icon>{{ report.studies }}
+      </ion-row>
+    </ion-card-content>
+    <ion-row no-padding>
+      <button ion-button clear small color="navBarColor" icon-left (click)="itemSelected(report)">
+        <ion-icon name='create'></ion-icon>
+          Editar
+        </button>
+      <button ion-button clear small color="orangeColor" icon-left>
         <ion-icon name='trash'></ion-icon>
           Remover
         </button>

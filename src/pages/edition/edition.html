@@ -3,7 +3,10 @@
   <ion-navbar color="navBarColor">
     <ion-title>Janeiro 2017</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="onCancelClick()">
+      <button ion-button icon-only (click)="onConfirmClick()" padding-right>
+        <ion-icon name="done-all" color="orangeColor"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="onCancelClick()" padding-right>
         <ion-icon name="close" color="orangeColor"></ion-icon>
       </button>
     </ion-buttons>
@@ -53,14 +56,6 @@
         <ion-label stacked>Estudos</ion-label>
         <ion-input [(ngModel)]="report.studies" type="number"></ion-input>
       </ion-item>
-    </ion-row>
-    <ion-row>
-      <button ion-button full (click)="onConfirmClick()">
-        <ion-icon name="done-all"></ion-icon>
-      </button>
-      <button ion-button full color="danger" (click)="onCancelClick()">
-        <ion-icon name="close"></ion-icon>
-      </button>
     </ion-row>
   </ion-grid>
 
