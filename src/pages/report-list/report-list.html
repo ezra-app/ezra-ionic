@@ -11,12 +11,17 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Janeiro 2017</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onAddClick()">
+        <ion-icon name="add" color="orangeColor"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content no-padding>
+<ion-content no-padding padding-bottom>
 
   <!--<ion-list>
     <button ion-item *ngFor="let report of reports" (click)="itemSelected(report)">

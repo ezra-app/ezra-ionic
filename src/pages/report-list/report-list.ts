@@ -2,7 +2,7 @@ import { EditionPage } from '../edition/edition';
 import { ReportService } from '../../providers/report-service';
 import { ReportModel } from '../../models/report-model';
 import { Component } from '@angular/core';
-import { ModalController, NavController, NavParams } from 'ionic-angular';
+import { ModalController, NavController, NavParams, Events } from 'ionic-angular';
 
 /*
   Generated class for the ReportList page.
@@ -19,10 +19,16 @@ export class ReportListPage {
   reports: ReportModel[] = new Array<ReportModel>();
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    reportService: ReportService, public modalCtrl: ModalController) {
+    reportService: ReportService, public modalCtrl: ModalController, public events: Events) {
     reportService.loadAllReports().then(result => {
       this.reports = result;
-    })
+    });
+
+    events.subscribe('report:created', () => {
+      reportService.loadAllReports().then(result => {
+        this.reports = result;
+      });
+    });
   }
 
   ionViewDidLoad() {
@@ -30,7 +36,12 @@ export class ReportListPage {
   }
 
   public itemSelected(report: ReportModel) {
-    let modal = this.modalCtrl.create(EditionPage, {"report": report});
+    let modal = this.modalCtrl.create(EditionPage, { "report": report });
+    modal.present();
+  }
+
+  onAddClick(): void {
+    let modal = this.modalCtrl.create(EditionPage);
     modal.present();
   }
 
