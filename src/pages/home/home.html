@@ -43,12 +43,21 @@
     </ion-item>
   </button>
 
-  <ion-item-divider color="navBarColor">
-    Minhas Metas
-  </ion-item-divider>
-  <ion-item padding>
-    Minha meta é 50 horas <br> Preciso de 2 horas por dia <br> Faltam 10 horas para acabar
-  </ion-item>
+  <ion-list>
+    <ion-item-divider color="navBarColor">
+      Minhas Metas
+    </ion-item-divider>
+    <ion-item>
+      Minha meta é 50 horas
+    </ion-item>
+    <ion-item>
+      Preciso de 2 horas por dia
+    </ion-item>
+    <ion-item>
+      Faltam 10 horas para acabar
+    </ion-item>
+  </ion-list>
+  
   <ion-fab bottom right (click)="onAddClick()">
     <button ion-fab color="navBarColor"><ion-icon name="add" color="orangeColor"></ion-icon></button>
   </ion-fab>

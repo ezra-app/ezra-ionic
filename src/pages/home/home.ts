@@ -28,7 +28,6 @@ export class HomePage {
 
     this.loadReports();
     events.subscribe('report:created', () => {
-      console.log('Welcome');
       this.loadReports();
     });
   }
@@ -74,7 +73,7 @@ export class HomePage {
   }
 
   onActivityCounterClick(): void {
-    if(this.activityCounterIcon == 'play') {
+    if (this.activityCounterIcon == 'play') {
       this.activityCounterIcon = 'pause';
     } else {
       this.activityCounterIcon = 'play';
