@@ -4,7 +4,7 @@ import { ReportModel } from '../../models/report-model';
 import { ReportService } from '../../providers/report-service';
 import { EditionPage } from './../edition/edition';
 import { Component } from '@angular/core';
-import { Events, NavController, NavParams, ViewController } from 'ionic-angular';
+import { Events, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 
 /*
@@ -24,7 +24,7 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public modalCtrl: ModalController, public reportService: ReportService,
-    public viewCtrl: ViewController, public events: Events) {
+    public viewCtrl: ViewController, public events: Events, public toastCtrl: ToastController) {
 
     this.loadReports();
     events.subscribe('report:created', () => {
@@ -75,9 +75,21 @@ export class HomePage {
   onActivityCounterClick(): void {
     if (this.activityCounterIcon == 'play') {
       this.activityCounterIcon = 'pause';
+      this.showToast('Contador iniciado');
     } else {
       this.activityCounterIcon = 'play';
+      this.showToast('Contador pausado');
     }
+  }
+
+  showToast(message: string) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 1500,
+      showCloseButton: true,
+      closeButtonText: 'Ok'
+    });
+    toast.present();
   }
 
   onSettingsButtonClick(): void {
