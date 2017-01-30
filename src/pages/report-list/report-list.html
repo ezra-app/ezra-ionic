@@ -28,7 +28,7 @@
         <ion-icon name="clock" padding-right></ion-icon>{{ report.hours }} <br>
         <ion-icon name="book" padding-right padding-left></ion-icon>{{ report.publications }} <br>
         <ion-icon name="film" padding-right padding-left></ion-icon>{{ report.videos }} <br>
-         <ion-icon name="bookmark" padding-right padding-left></ion-icon>{{ report.revisits }} <br>
+        <ion-icon name="bookmark" padding-right padding-left></ion-icon>{{ report.revisits }} <br>
         <ion-icon name="school" padding-right padding-left></ion-icon>{{ report.studies }}
       </ion-row>
     </ion-card-content>
@@ -36,11 +36,11 @@
       <button ion-button clear small color="navBarColor" icon-left (click)="itemSelected(report)">
         <ion-icon name='create'></ion-icon>
           Editar
-        </button>
-      <button ion-button clear small color="orangeColor" icon-left>
+      </button>
+      <button ion-button clear small color="orangeColor" icon-left (click)="onRemoveClick(report)">
         <ion-icon name='trash'></ion-icon>
           Remover
-        </button>
+      </button>
     </ion-row>
   </ion-card>
 </ion-content>
