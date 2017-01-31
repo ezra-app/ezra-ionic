@@ -33,18 +33,24 @@ export class EditionPage {
     console.log('ionViewDidLoad EditionPage');
   }
 
-  onConfirmClick(): void {
+  async onConfirmClick() {
+    if(this.editing) {
+      await this.reportService.removeReport(this.report);
+    }
+    this.saveReport();
+  }
+
+  saveReport() {
     this.reportService.saveReport(this.report).then(()=> {
       this.events.publish('report:updated');
       this.viewCtrl.dismiss();
     }).catch((err) => {
       alert(err);
     });
-    
   }
 
   onCancelClick(): void {
-    this.viewCtrl.dismiss()
+    this.viewCtrl.dismiss().then(() => this.events.publish('report:updated'))
   }
 
 }

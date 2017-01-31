@@ -1,6 +1,6 @@
-import { EditionPage } from '../edition/edition';
-import { ReportService } from '../../providers/report-service';
 import { ReportModel } from '../../models/report-model';
+import { ReportService } from '../../providers/report-service';
+import { EditionPage } from '../edition/edition';
 import { Component } from '@angular/core';
 import { AlertController, Events, ModalController, NavController, NavParams } from 'ionic-angular';
 
@@ -37,7 +37,7 @@ export class ReportListPage {
     console.log('ionViewDidLoad ReportListPage');
   }
 
-  public itemSelected(report: ReportModel) {
+  public onEditClick(report: ReportModel) {
     let modal = this.modalCtrl.create(EditionPage, { "report": report });
     modal.present();
   }
@@ -49,7 +49,7 @@ export class ReportListPage {
 
   onRemoveClick(report: ReportModel): void {
     this.showConfirm(() => {
-      this.reportService.removeReport(this.reports, report).then(() => {
+      this.reportService.removeReport(report, this.reports).then(() => {
         this.events.publish('report:updated');
       });
     });
