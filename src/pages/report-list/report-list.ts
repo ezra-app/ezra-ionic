@@ -20,15 +20,15 @@ export class ReportListPage {
   muliSelectEnabled: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    reportService: ReportService, public modalCtrl: ModalController, public events: Events,
+    public reportService: ReportService, public modalCtrl: ModalController, public events: Events,
     public alertCtrl: AlertController) {
     reportService.loadAllReports().then(result => {
-      this.reports = result;
+      this.reports = result.sort((r1, r2) => parseInt(r2.id) - parseInt(r1.id));
     });
 
-    events.subscribe('report:created', () => {
+    events.subscribe('report:updated', () => {
       reportService.loadAllReports().then(result => {
-        this.reports = result;
+        this.reports = result.sort((r1, r2) => parseInt(r2.id) - parseInt(r1.id));
       });
     });
   }
@@ -48,19 +48,21 @@ export class ReportListPage {
   }
 
   onRemoveClick(report: ReportModel): void {
-    this.showConfirm(report);
+    this.showConfirm(() => {
+      this.reportService.removeReport(this.reports, report).then(() => {
+        this.events.publish('report:updated');
+      });
+    });
   }
 
-  showConfirm(report: ReportModel): void {
+  showConfirm(yesFunction: Function): void {
     let confirm = this.alertCtrl.create({
       title: 'Remover?',
       message: 'Tem certeza que deseja remover?',
       buttons: [
         {
           text: 'Sim',
-          handler: () => {
-            console.log('Sim');
-          }
+          handler: yesFunction
         },
         {
           text: 'Nao',

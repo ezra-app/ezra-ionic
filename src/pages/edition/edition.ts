@@ -35,7 +35,7 @@ export class EditionPage {
 
   onConfirmClick(): void {
     this.reportService.saveReport(this.report).then(()=> {
-      this.events.publish('report:created');
+      this.events.publish('report:updated');
       this.viewCtrl.dismiss();
     }).catch((err) => {
       alert(err);

@@ -27,7 +27,7 @@ export class HomePage {
     public viewCtrl: ViewController, public events: Events, public toastCtrl: ToastController) {
 
     this.loadReports();
-    events.subscribe('report:created', () => {
+    events.subscribe('report:updated', () => {
       this.loadReports();
     });
   }

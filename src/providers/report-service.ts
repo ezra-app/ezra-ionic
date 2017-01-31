@@ -21,7 +21,11 @@ export class ReportService {
     let reports: ReportModel[] = await this.storage.get('reports:list') as ReportModel[];
     if (!reports) {
       reports = [];
+      await this.storage.set('reports:ids', 1);
     }
+    report.id = await this.storage.get('reports:ids');
+    console.log('id: ' + report.id);
+    this.storage.set('reports:ids', parseInt(report.id) + 1);
     reports.push(report);
     this.storage.set('reports:list', reports);
     console.log("report saved: ");
@@ -30,8 +34,7 @@ export class ReportService {
 
   public async loadReportsSumary(): Promise<ReportModel> {
     let reports: ReportModel[] = await this.storage.get('reports:list') as ReportModel[];
-    if (reports) {
-      console.log("returned reports 0", reports[reports.length - 1].hours);
+    if (reports && reports.length > 0) {
       return reports.reduce((prev, curr, currIndex, array) => {
         var reportSumary = new ReportModel();
         reportSumary.hours = this.sumAsNumber(prev.hours, curr.hours);
@@ -51,6 +54,11 @@ export class ReportService {
   
   public async loadAllReports(): Promise<ReportModel[]> {
     return await this.storage.get('reports:list') as ReportModel[];
+  }
+
+  public async removeReport(reports: ReportModel[], report: ReportModel) {
+    let reportsFiltered: ReportModel[] = reports.filter(r => r.id != report.id)
+    await this.storage.set('reports:list', reportsFiltered);
   }
 
   private sumAsNumber(...values: any[]): string {
