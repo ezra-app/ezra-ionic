@@ -11,6 +11,9 @@
     </button>
     <ion-title>Janeiro 2017</ion-title>
     <ion-buttons end>
+      <button ion-button icon-only *ngIf="muliSelectEnabled" (click)="onRemoveSelectedClick()">
+        <ion-icon name="trash" color="orangeColor"></ion-icon>
+      </button>
       <button ion-button icon-only (click)="onAddClick()">
         <ion-icon name="add" color="orangeColor"></ion-icon>
       </button>
@@ -19,28 +22,32 @@
 </ion-header>
 
 <ion-content no-padding padding-bottom>
-  <ion-card *ngFor="let report of reports">
-    <ion-card-content no-padding>
-      <ion-item-divider color="navBarColor">
-        Dia: 10
-      </ion-item-divider>
-      <ion-row padding>
-        <ion-icon name="clock" padding-right></ion-icon>{{ report.hours }} <br>
-        <ion-icon name="book" padding-right padding-left></ion-icon>{{ report.publications }} <br>
-        <ion-icon name="film" padding-right padding-left></ion-icon>{{ report.videos }} <br>
-        <ion-icon name="bookmark" padding-right padding-left></ion-icon>{{ report.revisits }} <br>
-        <ion-icon name="school" padding-right padding-left></ion-icon>{{ report.studies }}
-      </ion-row>
-    </ion-card-content>
-    <ion-row no-padding>
-      <button ion-button clear small color="navBarColor" icon-left (click)="onEditClick(report)">
+  <div *ngFor="let report of reports">
+    <div *ngIf="muliSelectEnabled && report.selected" (click)="onSelectClick(report)" 
+      style="background: rgba(24, 114, 136, 0.2); position: absolute; width: 100%; height: 146px; z-index: 999"></div>
+    <ion-card (press)="onPress(report)" (click)="onSelectClick(report)">
+      <ion-card-content no-padding>
+        <ion-item-divider color="navBarColor">
+          Dia: 10
+        </ion-item-divider>
+        <ion-row padding>
+          <ion-icon name="clock" padding-right></ion-icon>{{ report.hours }} <br>
+          <ion-icon name="book" padding-right padding-left></ion-icon>{{ report.publications }} <br>
+          <ion-icon name="film" padding-right padding-left></ion-icon>{{ report.videos }} <br>
+          <ion-icon name="bookmark" padding-right padding-left></ion-icon>{{ report.revisits }} <br>
+          <ion-icon name="school" padding-right padding-left></ion-icon>{{ report.studies }}
+        </ion-row>
+      </ion-card-content>
+      <ion-row no-padding>
+        <button ion-button clear small color="navBarColor" icon-left (click)="onEditClick(report)">
         <ion-icon name='create'></ion-icon>
           Editar
       </button>
-      <button ion-button clear small color="orangeColor" icon-left (click)="onRemoveClick(report)">
+        <button ion-button clear small color="orangeColor" icon-left (click)="onRemoveClick(report)">
         <ion-icon name='trash'></ion-icon>
           Remover
       </button>
-    </ion-row>
-  </ion-card>
+      </ion-row>
+    </ion-card>
+  </div>
 </ion-content>

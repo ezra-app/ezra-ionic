@@ -18,6 +18,7 @@ export class ReportListPage {
 
   reports: ReportModel[] = new Array<ReportModel>();
   muliSelectEnabled: boolean = false;
+  selecteds: number = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public reportService: ReportService, public modalCtrl: ModalController, public events: Events,
@@ -52,13 +53,13 @@ export class ReportListPage {
       this.reportService.removeReport(report, this.reports).then(() => {
         this.events.publish('report:updated');
       });
-    });
+    }, 'Remover?');
   }
 
-  showConfirm(yesFunction: Function): void {
+  showConfirm(yesFunction: Function, title?: string, message?: string): void {
     let confirm = this.alertCtrl.create({
-      title: 'Remover?',
-      message: 'Tem certeza que deseja remover?',
+      title: title,
+      message: message,
       buttons: [
         {
           text: 'Sim',
@@ -73,6 +74,43 @@ export class ReportListPage {
       ]
     });
     confirm.present();
+  }
+
+  onPress(report: ReportModel) {
+    this.muliSelectEnabled = true;
+    report.selected = true;
+    this.updateSelecteds(report.selected);
+  }
+
+  onSelectClick(report: ReportModel) {
+    if (this.muliSelectEnabled) {
+      report.selected = !report.selected;
+      this.updateSelecteds(report.selected);
+    }
+  }
+
+  updateSelecteds(selected: boolean) {
+    if (selected) {
+      this.selecteds++;
+    } else if (this.selecteds > 0) {
+      this.selecteds--;
+    }
+
+    if (this.selecteds <= 0) {
+      this.muliSelectEnabled = false;
+    }
+
+    console.log("selecteds: ", this.selecteds);
+  }
+
+  async onRemoveSelectedClick() {
+    this.showConfirm(() => {
+      this.reportService.removeSelecteds(this.reports).then(() => {
+        this.events.publish('report:updated');
+        this.muliSelectEnabled = false;
+        this.selecteds = 0;
+      });
+    }, `Remover ${this.selecteds} registros?`);
   }
 
 }

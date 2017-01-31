@@ -85,7 +85,7 @@ export class HomePage {
   showToast(message: string) {
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 1500,
+      duration: 3000,
       showCloseButton: true,
       closeButtonText: 'Ok'
     });

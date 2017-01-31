@@ -6,4 +6,5 @@ export class ReportModel {
     videos: string;
     revisits: string;
     studies: string;
+    selected?: boolean;
 }

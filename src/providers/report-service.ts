@@ -66,6 +66,11 @@ export class ReportService {
     await this.storage.set('reports:list', reportsFiltered);
   }
 
+  public async removeSelecteds(reports: ReportModel[]) {
+    let reportsFiltered: ReportModel[] = reports.filter(r => !r.selected)
+    await this.storage.set('reports:list', reportsFiltered);
+  }
+
   private sumAsNumber(...values: any[]): string {
     var result: number = 0;
     values.forEach(value => {
