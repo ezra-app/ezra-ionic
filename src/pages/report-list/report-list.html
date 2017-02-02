@@ -31,7 +31,7 @@
           Dia: 10
         </ion-item-divider>
         <ion-row padding>
-          <ion-icon name="clock" padding-right></ion-icon>{{ report.hours }} <br>
+          <ion-icon name="clock" padding-right></ion-icon>{{ formatHours(report.hours, report.minutes) }} <br>
           <ion-icon name="book" padding-right padding-left></ion-icon>{{ report.publications }} <br>
           <ion-icon name="film" padding-right padding-left></ion-icon>{{ report.videos }} <br>
           <ion-icon name="bookmark" padding-right padding-left></ion-icon>{{ report.revisits }} <br>

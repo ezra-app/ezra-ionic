@@ -6,6 +6,7 @@ import { EditionPage } from './../edition/edition';
 import { Component } from '@angular/core';
 import { Events, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
+import * as moment from 'moment';
 
 /*
   Generated class for the Home page.
@@ -66,6 +67,16 @@ export class HomePage {
     } else {
       return hour;
     }
+  }
+
+  formatHours(hours: string, minutes: string): string {
+    if (!hours || hours == '') {
+      hours = '0'
+    }
+    if (!minutes || minutes == '') {
+      minutes = '0'
+    }
+    return moment().hour(parseInt(hours)).minute(parseInt(minutes)).format("HH:mm");
   }
 
   onReportSumaryClick(): void {

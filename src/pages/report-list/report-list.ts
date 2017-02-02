@@ -3,6 +3,7 @@ import { ReportService } from '../../providers/report-service';
 import { EditionPage } from '../edition/edition';
 import { Component } from '@angular/core';
 import { AlertController, Events, ModalController, NavController, NavParams } from 'ionic-angular';
+import * as moment from 'moment';
 
 /*
   Generated class for the ReportList page.
@@ -24,12 +25,16 @@ export class ReportListPage {
     public reportService: ReportService, public modalCtrl: ModalController, public events: Events,
     public alertCtrl: AlertController) {
     reportService.loadAllReports().then(result => {
-      this.reports = result.sort((r1, r2) => parseInt(r2.id) - parseInt(r1.id));
+      if (result) {
+        this.reports = result.sort((r1, r2) => parseInt(r2.id) - parseInt(r1.id));
+      }
     });
 
     events.subscribe('report:updated', () => {
       reportService.loadAllReports().then(result => {
-        this.reports = result.sort((r1, r2) => parseInt(r2.id) - parseInt(r1.id));
+        if (result) {
+          this.reports = result.sort((r1, r2) => parseInt(r2.id) - parseInt(r1.id));
+        }
       });
     });
   }
@@ -111,6 +116,16 @@ export class ReportListPage {
         this.selecteds = 0;
       });
     }, `Remover ${this.selecteds} registros?`);
+  }
+
+  formatHours(hours: string, minutes: string): string {
+    if (!hours || hours == '') {
+      hours = '0'
+    }
+    if (!minutes || minutes == '') {
+      minutes = '0'
+    }
+    return moment().hour(parseInt(hours)).minute(parseInt(minutes)).format("HH:mm");
   }
 
 }

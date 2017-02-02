@@ -19,7 +19,7 @@
     <ion-item>
       <ion-icon name="clock" item-left></ion-icon>
       <span color="navBarColor">Horas:</span>
-      <span item-right color="navBarColor">{{normalizeHour(reportSumary.hours)}}:{{normalizeHour(reportSumary.minutes)}}</span>
+      <span item-right color="navBarColor">{{formatHours(reportSumary.hours, reportSumary.minutes)}}</span>
     </ion-item>
     <ion-item>
       <ion-icon name="book" item-left></ion-icon>
