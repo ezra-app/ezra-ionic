@@ -9,7 +9,10 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Janeiro 2017</ion-title>
+    <ion-title no-padding >
+      <ion-datetime no-padding displayFormat="MMMM YYYY" [(ngModel)]="dateControl" cancelText="Cancelar" doneText="OK" 
+      monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"></ion-datetime>
+    </ion-title>
     <ion-buttons end>
       <button ion-button icon-only *ngIf="muliSelectEnabled" (click)="onRemoveSelectedClick()">
         <ion-icon name="trash" color="orangeColor"></ion-icon>

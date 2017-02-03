@@ -21,6 +21,7 @@ import * as moment from 'moment';
 export class HomePage {
   reportSumary: ReportModel = new ReportModel();
   activityCounterIcon: string = 'play';
+  dateControl: string = moment().format('YYYY-MM-DD');
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -80,7 +81,7 @@ export class HomePage {
   }
 
   onReportSumaryClick(): void {
-    this.navCtrl.push(ReportListPage);
+    this.navCtrl.push(ReportListPage, { "dateControl": this.dateControl });
   }
 
   onActivityCounterClick(): void {

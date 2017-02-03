@@ -3,7 +3,10 @@
     <button ion-button menuToggle>
       <ion-icon name="menu" color="orangeColor"></ion-icon>
     </button>
-    <ion-title>Janeiro 2017</ion-title>
+    <ion-title  no-padding>
+      <ion-datetime  no-padding  displayFormat="MMMM YYYY" [(ngModel)]="dateControl" cancelText="Cancelar" doneText="OK" 
+      monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"></ion-datetime>
+    </ion-title>
     <ion-buttons end>
       <button ion-button icon-only end (click)="onActivityCounterClick()">
         <ion-icon [name]="activityCounterIcon" color="orangeColor"></ion-icon>
@@ -57,7 +60,7 @@
       Faltam 10 horas para acabar
     </ion-item>
   </ion-list>
-  
+
   <ion-fab bottom right (click)="onAddClick()">
     <button ion-fab color="navBarColor"><ion-icon name="add" color="orangeColor"></ion-icon></button>
   </ion-fab>
