@@ -4,9 +4,12 @@ import { ReportModel } from '../../models/report-model';
 import { ReportService } from '../../providers/report-service';
 import { EditionPage } from './../edition/edition';
 import { Component } from '@angular/core';
-import { Events, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
+import { Events, Gesture, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import * as moment from 'moment';
+
+const DIRECTION_LEFT: string = '2';
+const DIRECTION_RIGHT: string = '4';
 
 /*
   Generated class for the Home page.
@@ -106,6 +109,14 @@ export class HomePage {
 
   onSettingsButtonClick(): void {
     this.navCtrl.push(SettingsPage);
+  }
+
+  onSwipe(event: Gesture) {
+    if (event.direction == DIRECTION_LEFT) {
+      this.dateControl = moment(this.dateControl).add(1, 'months').format('YYYY-MM-DD');
+    } else {
+      this.dateControl = moment(this.dateControl).subtract(1, 'months').format('YYYY-MM-DD');
+    }
   }
 
 }

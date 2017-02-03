@@ -18,7 +18,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <button ion-item (click)="onReportSumaryClick()">
+  <button ion-item (click)="onReportSumaryClick()" (swipe)="onSwipe($event)">
     <ion-item>
       <ion-icon name="clock" item-left></ion-icon>
       <span color="navBarColor">Horas:</span>
