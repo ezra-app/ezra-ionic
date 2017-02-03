@@ -14,7 +14,7 @@
       <button ion-button icon-only *ngIf="muliSelectEnabled" (click)="onRemoveSelectedClick()">
         <ion-icon name="trash" color="orangeColor"></ion-icon>
       </button>
-      <button ion-button icon-only (click)="onAddClick()">
+      <button ion-button icon-only *ngIf="!muliSelectEnabled" (click)="onAddClick()">
         <ion-icon name="add" color="orangeColor"></ion-icon>
       </button>
     </ion-buttons>

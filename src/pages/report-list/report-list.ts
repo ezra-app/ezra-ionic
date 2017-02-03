@@ -44,8 +44,10 @@ export class ReportListPage {
   }
 
   public onEditClick(report: ReportModel) {
-    let modal = this.modalCtrl.create(EditionPage, { "report": report });
-    modal.present();
+    if (!this.muliSelectEnabled) {
+      let modal = this.modalCtrl.create(EditionPage, { "report": report });
+      modal.present();
+    }
   }
 
   onAddClick(): void {
@@ -54,11 +56,13 @@ export class ReportListPage {
   }
 
   onRemoveClick(report: ReportModel): void {
-    this.showConfirm(() => {
-      this.reportService.removeReport(report, this.reports).then(() => {
-        this.events.publish('report:updated');
-      });
-    }, 'Remover?');
+    if (!this.muliSelectEnabled) {
+      this.showConfirm(() => {
+        this.reportService.removeReport(report, this.reports).then(() => {
+          this.events.publish('report:updated');
+        });
+      }, 'Remover?');
+    }
   }
 
   showConfirm(yesFunction: Function, title?: string, message?: string): void {
