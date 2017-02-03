@@ -20,7 +20,7 @@ export class ReportListPage {
   reports: ReportModel[] = new Array<ReportModel>();
   muliSelectEnabled: boolean = false;
   selecteds: number = 0;
-  dateControl: string = moment().format('YYYY-MM-DD');;
+  dateControl: string = moment().format('YYYY-MM-DD');
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public reportService: ReportService, public modalCtrl: ModalController, public events: Events,
