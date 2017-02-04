@@ -20,7 +20,7 @@ export class ReportListPage {
   reports: ReportModel[] = new Array<ReportModel>();
   muliSelectEnabled: boolean = false;
   selecteds: number = 0;
-  dateControl: string = moment().format('YYYY-MM-DD');
+  dateControl: string = moment().format('YYYY-MM');
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public reportService: ReportService, public modalCtrl: ModalController, public events: Events,
@@ -56,7 +56,7 @@ export class ReportListPage {
   }
 
   onAddClick(): void {
-    let modal = this.modalCtrl.create(EditionPage);
+    let modal = this.modalCtrl.create(EditionPage, { 'reportDate': moment(this.dateControl).toDate() });
     modal.present();
   }
 

@@ -24,7 +24,7 @@ const DIRECTION_RIGHT: string = '4';
 export class HomePage {
   reportSumary: ReportModel = new ReportModel();
   activityCounterIcon: string = 'play';
-  dateControl: string = moment().format('YYYY-MM-DD');
+  dateControl: string = moment().format('YYYY-MM');
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -51,7 +51,7 @@ export class HomePage {
   }
 
   onAddClick(): void {
-    let modal = this.modalCtrl.create(EditionPage);
+    let modal = this.modalCtrl.create(EditionPage, { 'reportDate': moment(this.dateControl).toDate() });
     modal.present();
   }
 
@@ -112,10 +112,14 @@ export class HomePage {
   }
 
   onSwipe(event: Gesture) {
+    var momentCrtl: moment.Moment = moment(this.dateControl);
+    var now: moment.Moment = moment();
     if (event.direction == DIRECTION_LEFT) {
-      this.dateControl = moment(this.dateControl).add(1, 'months').format('YYYY-MM-DD');
+      if (momentCrtl.get('month') != now.get('month') || momentCrtl.get('year') != now.get('year')) {
+        this.dateControl = momentCrtl.add(1, 'months').format('YYYY-MM');
+      }
     } else {
-      this.dateControl = moment(this.dateControl).subtract(1, 'months').format('YYYY-MM-DD');
+      this.dateControl = momentCrtl.subtract(1, 'months').format('YYYY-MM');
     }
   }
 

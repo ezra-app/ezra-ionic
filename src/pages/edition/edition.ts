@@ -19,29 +19,28 @@ export class EditionPage {
   report: ReportModel = new ReportModel();
   editing: boolean;
 
-  constructor(public navCtrl: NavController, 
-    public navParams: NavParams, public viewCtrl: ViewController, 
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams, public viewCtrl: ViewController,
     public reportService: ReportService, public events: Events) {
-      if(navParams.get("report")) {
-        this.editing = true;
-        this.report = navParams.get("report");
-      }
-
+    if (navParams.get("report")) {
+      this.editing = true;
+      this.report = navParams.get("report");
     }
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditionPage');
   }
 
   async onConfirmClick() {
-    if(this.editing) {
+    if (this.editing) {
       await this.reportService.removeReport(this.report);
     }
     this.saveReport();
   }
 
   saveReport() {
-    this.reportService.saveReport(this.report).then(()=> {
+    this.reportService.saveReport(this.report).then(() => {
       this.events.publish('report:updated');
       this.viewCtrl.dismiss();
     }).catch((err) => {

@@ -28,6 +28,9 @@ export class ReportService {
       console.log('id: ' + report.id);
       this.storage.set('reports:ids', parseInt(report.id) + 1);
     }
+    if (!report.date) {
+      report.date = new Date();
+    }
     reports.push(report);
     this.storage.set('reports:list', reports);
     console.log("report saved: ");

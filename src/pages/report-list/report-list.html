@@ -35,10 +35,10 @@
         </ion-item-divider>
         <ion-row padding>
           <ion-icon name="clock" padding-right></ion-icon>{{ formatHours(report.hours, report.minutes) }} <br>
-          <ion-icon name="book" padding-right padding-left></ion-icon>{{ report.publications }} <br>
-          <ion-icon name="film" padding-right padding-left></ion-icon>{{ report.videos }} <br>
-          <ion-icon name="bookmark" padding-right padding-left></ion-icon>{{ report.revisits }} <br>
-          <ion-icon name="school" padding-right padding-left></ion-icon>{{ report.studies }}
+          <ion-icon name="book" *ngIf="report.publications" padding-right padding-left></ion-icon>{{ report.publications }} <br>
+          <ion-icon name="film" *ngIf="report.videos" padding-right padding-left></ion-icon>{{ report.videos }} <br>
+          <ion-icon name="bookmark" *ngIf="report.revisits" padding-right padding-left></ion-icon>{{ report.revisits }} <br>
+          <ion-icon name="school" *ngIf="report.studies" padding-right padding-left></ion-icon>{{ report.studies }}
         </ion-row>
       </ion-card-content>
       <ion-row no-padding>
