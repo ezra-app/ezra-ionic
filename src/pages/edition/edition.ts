@@ -1,5 +1,6 @@
 import { ReportService } from '../../providers/report-service';
-import { ReportModel } from './../../models/report-model';
+import { AppConstants } from './../../model/app-contants';
+import { ReportModel } from './../../model/report-model';
 import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
 import { Events } from 'ionic-angular';
@@ -22,9 +23,10 @@ export class EditionPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams, public viewCtrl: ViewController,
     public reportService: ReportService, public events: Events) {
-    if (navParams.get("report")) {
+      
+    if (navParams.get(AppConstants.REPORT_PARAM)) {
       this.editing = true;
-      this.report = navParams.get("report");
+      this.report = navParams.get(AppConstants.REPORT_PARAM);
     }
   }
 
@@ -41,7 +43,7 @@ export class EditionPage {
 
   saveReport() {
     this.reportService.saveReport(this.report).then(() => {
-      this.events.publish('report:updated');
+      this.events.publish(AppConstants.EVENT_REPORT_UPDATED);
       this.viewCtrl.dismiss();
     }).catch((err) => {
       alert(err);
@@ -49,7 +51,7 @@ export class EditionPage {
   }
 
   onCancelClick(): void {
-    this.viewCtrl.dismiss().then(() => this.events.publish('report:updated'))
+    this.viewCtrl.dismiss().then(() => this.events.publish(AppConstants.EVENT_REPORT_UPDATED));
   }
 
 }

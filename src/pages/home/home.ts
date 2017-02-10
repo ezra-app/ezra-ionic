@@ -1,6 +1,7 @@
+import { AppConstants } from './../../model/app-contants';
 import { SettingsPage } from './../settings/settings';
 import { ReportListPage } from '../report-list/report-list';
-import { ReportModel } from '../../models/report-model';
+import { ReportModel } from '../../model/report-model';
 import { ReportService } from '../../providers/report-service';
 import { EditionPage } from './../edition/edition';
 import { Component } from '@angular/core';
@@ -24,15 +25,16 @@ const DIRECTION_RIGHT: string = '4';
 export class HomePage {
   reportSumary: ReportModel = new ReportModel();
   activityCounterIcon: string = 'play';
-  dateControl: string = moment().format('YYYY-MM');
-
+  dateControl: Date = new Date();
+  datePickerValue: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public modalCtrl: ModalController, public reportService: ReportService,
     public viewCtrl: ViewController, public events: Events, public toastCtrl: ToastController) {
 
+    this.datePickerValue = moment(this.dateControl).format(AppConstants.DATE_PICKER_FORMAT);
     this.loadReports();
-    events.subscribe('report:updated', () => {
+    events.subscribe(AppConstants.EVENT_REPORT_UPDATED, () => {
       this.loadReports();
     });
   }
@@ -51,7 +53,7 @@ export class HomePage {
   }
 
   onAddClick(): void {
-    let modal = this.modalCtrl.create(EditionPage, { 'reportDate': moment(this.dateControl).toDate() });
+    let modal = this.modalCtrl.create(EditionPage, { dateControl: this.dateControl });
     modal.present();
   }
 
@@ -80,11 +82,11 @@ export class HomePage {
     if (!minutes || minutes == '') {
       minutes = '0'
     }
-    return moment().hour(parseInt(hours)).minute(parseInt(minutes)).format("HH:mm");
+    return moment().hour(parseInt(hours)).minute(parseInt(minutes)).format(AppConstants.TIME_FORMAT);
   }
 
   onReportSumaryClick(): void {
-    this.navCtrl.push(ReportListPage, { "dateControl": this.dateControl });
+    this.navCtrl.push(ReportListPage, { dateControl: this.dateControl });
   }
 
   onActivityCounterClick(): void {
@@ -112,14 +114,14 @@ export class HomePage {
   }
 
   onSwipe(event: Gesture) {
-    var momentCrtl: moment.Moment = moment(this.dateControl);
+    var momentCrtl: moment.Moment = moment(this.datePickerValue);
     var now: moment.Moment = moment();
     if (event.direction == DIRECTION_LEFT) {
       if (momentCrtl.get('month') != now.get('month') || momentCrtl.get('year') != now.get('year')) {
-        this.dateControl = momentCrtl.add(1, 'months').format('YYYY-MM');
+        this.datePickerValue = momentCrtl.add(1, 'months').format(AppConstants.DATE_PICKER_FORMAT);
       }
     } else {
-      this.dateControl = momentCrtl.subtract(1, 'months').format('YYYY-MM');
+      this.datePickerValue = momentCrtl.subtract(1, 'months').format(AppConstants.DATE_PICKER_FORMAT);
     }
   }
 

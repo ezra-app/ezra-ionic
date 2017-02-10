@@ -1,5 +1,6 @@
+import { AppConstants } from './../model/app-contants';
 import 'rxjs/add/operator/map';
-import { ReportModel } from '../models/report-model';
+import { ReportModel } from '../model/report-model';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
@@ -18,7 +19,7 @@ export class ReportService {
   }
 
   public async saveReport(report: ReportModel) {
-    let reports: ReportModel[] = await this.storage.get('reports:list') as ReportModel[];
+    let reports: ReportModel[] = await this.storage.get(AppConstants.REPORTS_LIST_STORAGE_KEY) as ReportModel[];
     if (!reports) {
       reports = [];
       await this.storage.set('reports:ids', 1);
@@ -32,13 +33,13 @@ export class ReportService {
       report.date = new Date();
     }
     reports.push(report);
-    this.storage.set('reports:list', reports);
+    this.storage.set(AppConstants.REPORTS_LIST_STORAGE_KEY, reports);
     console.log("report saved: ");
     console.log(reports);
   }
 
   public async loadReportsSumary(): Promise<ReportModel> {
-    let reports: ReportModel[] = await this.storage.get('reports:list') as ReportModel[];
+    let reports: ReportModel[] = await this.storage.get(AppConstants.REPORTS_LIST_STORAGE_KEY) as ReportModel[];
     if (reports && reports.length > 0) {
       return reports.reduce((prev, curr, currIndex, array) => {
         var reportSumary = new ReportModel();
@@ -58,7 +59,19 @@ export class ReportService {
   }
 
   public async loadAllReports(): Promise<ReportModel[]> {
-    return await this.storage.get('reports:list') as ReportModel[];
+    return await this.storage.get(AppConstants.REPORTS_LIST_STORAGE_KEY) as ReportModel[];
+  }
+
+  public async loadAllReportsOrdered(): Promise<ReportModel[]> {
+    let reportsOrdered: ReportModel[] = await this.loadAllReports();
+    return new Promise<ReportModel[]>((resolve, reject) => {
+      if (reportsOrdered) {
+        reportsOrdered.sort((r1, r2) => parseInt(r2.id) - parseInt(r1.id));
+        resolve(reportsOrdered);
+      } else {
+        reject('Sem registros');
+      }
+    });
   }
 
   public async removeReport(report: ReportModel, reports?: ReportModel[]) {
@@ -66,12 +79,12 @@ export class ReportService {
       reports = await this.loadAllReports();
     }
     let reportsFiltered: ReportModel[] = reports.filter(r => r.id != report.id)
-    await this.storage.set('reports:list', reportsFiltered);
+    await this.storage.set(AppConstants.REPORTS_LIST_STORAGE_KEY, reportsFiltered);
   }
 
   public async removeSelecteds(reports: ReportModel[]) {
     let reportsFiltered: ReportModel[] = reports.filter(r => !r.selected)
-    await this.storage.set('reports:list', reportsFiltered);
+    await this.storage.set(AppConstants.REPORTS_LIST_STORAGE_KEY, reportsFiltered);
   }
 
   private sumAsNumber(...values: any[]): string {

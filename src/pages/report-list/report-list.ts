@@ -1,4 +1,5 @@
-import { ReportModel } from '../../models/report-model';
+import { AppConstants } from './../../model/app-contants';
+import { ReportModel } from '../../model/report-model';
 import { ReportService } from '../../providers/report-service';
 import { EditionPage } from '../edition/edition';
 import { Component } from '@angular/core';
@@ -20,27 +21,22 @@ export class ReportListPage {
   reports: ReportModel[] = new Array<ReportModel>();
   muliSelectEnabled: boolean = false;
   selecteds: number = 0;
-  dateControl: string = moment().format('YYYY-MM');
+  dateControl: Date = new Date();
+  datePickerValue: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public reportService: ReportService, public modalCtrl: ModalController, public events: Events,
     public alertCtrl: AlertController) {
-    if (this.navParams.get('dateControl')) {
-      this.dateControl = this.navParams.get('dateControl');
-    }
-    
-    reportService.loadAllReports().then(result => {
-      if (result) {
-        this.reports = result.sort((r1, r2) => parseInt(r2.id) - parseInt(r1.id));
-      }
-    });
 
-    events.subscribe('report:updated', () => {
-      reportService.loadAllReports().then(result => {
-        if (result) {
-          this.reports = result.sort((r1, r2) => parseInt(r2.id) - parseInt(r1.id));
-        }
-      });
+    this.datePickerValue = moment(this.dateControl).format(AppConstants.DATE_PICKER_FORMAT);
+    if (this.navParams.get(AppConstants.REPORT_DATE_CTRL_PARAM)) {
+      this.dateControl = this.navParams.get(AppConstants.REPORT_DATE_CTRL_PARAM);
+    }
+
+    this.fetchReports();
+
+    events.subscribe(AppConstants.EVENT_REPORT_UPDATED, () => {
+      this.fetchReports();
     });
   }
 
@@ -48,15 +44,19 @@ export class ReportListPage {
     console.log('ionViewDidLoad ReportListPage');
   }
 
+  private async fetchReports() {
+    this.reports = await this.reportService.loadAllReportsOrdered();
+  }
+
   public onEditClick(report: ReportModel) {
     if (!this.muliSelectEnabled) {
-      let modal = this.modalCtrl.create(EditionPage, { "report": report });
+      let modal = this.modalCtrl.create(EditionPage, { report: report });
       modal.present();
     }
   }
 
   onAddClick(): void {
-    let modal = this.modalCtrl.create(EditionPage, { 'reportDate': moment(this.dateControl).toDate() });
+    let modal = this.modalCtrl.create(EditionPage, { reportDate: moment(this.dateControl).toDate() });
     modal.present();
   }
 
@@ -64,7 +64,7 @@ export class ReportListPage {
     if (!this.muliSelectEnabled) {
       this.showConfirm(() => {
         this.reportService.removeReport(report, this.reports).then(() => {
-          this.events.publish('report:updated');
+          this.events.publish(AppConstants.EVENT_REPORT_UPDATED);
         });
       }, 'Remover?');
     }
@@ -120,7 +120,7 @@ export class ReportListPage {
   async onRemoveSelectedClick() {
     this.showConfirm(() => {
       this.reportService.removeSelecteds(this.reports).then(() => {
-        this.events.publish('report:updated');
+        this.events.publish(AppConstants.EVENT_REPORT_UPDATED);
         this.muliSelectEnabled = false;
         this.selecteds = 0;
       });
@@ -134,7 +134,7 @@ export class ReportListPage {
     if (!minutes || minutes == '') {
       minutes = '0'
     }
-    return moment().hour(parseInt(hours)).minute(parseInt(minutes)).format("HH:mm");
+    return moment().hour(parseInt(hours)).minute(parseInt(minutes)).format(AppConstants.TIME_FORMAT);
   }
 
 }
