@@ -1,6 +1,6 @@
 import { AppConstants } from './../../model/app-contants';
 import { ReportModel } from '../../model/report-model';
-import { ReportService } from '../../providers/report-service';
+import { ReportService } from '../../providers/report.service';
 import { EditionPage } from '../edition/edition';
 import { Component } from '@angular/core';
 import { AlertController, Events, ModalController, NavController, NavParams } from 'ionic-angular';
@@ -23,19 +23,19 @@ export class ReportListPage {
   selecteds: number = 0;
   dateControl: Date = new Date();
   datePickerValue: string;
+  maxDatePickerValue: string = moment(new Date()).format(AppConstants.DATE_PICKER_FORMAT);
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public reportService: ReportService, public modalCtrl: ModalController, public events: Events,
     public alertCtrl: AlertController) {
 
-    this.datePickerValue = moment(this.dateControl).format(AppConstants.DATE_PICKER_FORMAT);
     if (this.navParams.get(AppConstants.REPORT_DATE_CTRL_PARAM)) {
       this.dateControl = this.navParams.get(AppConstants.REPORT_DATE_CTRL_PARAM);
     }
-
+    this.datePickerValue = moment(this.dateControl).format(AppConstants.DATE_PICKER_FORMAT);
     this.fetchReports();
-
     events.subscribe(AppConstants.EVENT_REPORT_UPDATED, () => {
+      this.dateControl = moment(this.datePickerValue, AppConstants.DATE_PICKER_FORMAT).toDate();
       this.fetchReports();
     });
   }
@@ -45,12 +45,13 @@ export class ReportListPage {
   }
 
   private async fetchReports() {
-    this.reports = await this.reportService.loadAllReportsOrdered();
+    this.reports = await this.reportService.loadAllReportsOrdered(this.dateControl);
+    console.log(this.reports);
   }
 
   public onEditClick(report: ReportModel) {
     if (!this.muliSelectEnabled) {
-      let modal = this.modalCtrl.create(EditionPage, { report: report });
+      let modal = this.modalCtrl.create(EditionPage, { report: report, reportDate: this.dateControl });
       modal.present();
     }
   }
@@ -63,7 +64,7 @@ export class ReportListPage {
   onRemoveClick(report: ReportModel): void {
     if (!this.muliSelectEnabled) {
       this.showConfirm(() => {
-        this.reportService.removeReport(report, this.reports).then(() => {
+        this.reportService.removeReport(report).then(() => {
           this.events.publish(AppConstants.EVENT_REPORT_UPDATED);
         });
       }, 'Remover?');
@@ -135,6 +136,10 @@ export class ReportListPage {
       minutes = '0'
     }
     return moment().hour(parseInt(hours)).minute(parseInt(minutes)).format(AppConstants.TIME_FORMAT);
+  }
+
+  onDatePickerChange() {
+    this.events.publish(AppConstants.EVENT_REPORT_UPDATED);
   }
 
 }

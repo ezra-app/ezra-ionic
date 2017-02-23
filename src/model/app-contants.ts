@@ -8,6 +8,7 @@ export class AppConstants {
 
     //Others
     public static readonly DATE_PICKER_FORMAT: string = 'YYYY-MM';
+    public static readonly MAX_DATE_PICKER_VALUE_FORMAT: string = 'YYYY-MM-DD';
     public static readonly TIME_FORMAT: string = 'HH:mm';
     
     //Storage

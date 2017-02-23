@@ -2,7 +2,7 @@ import { AppConstants } from './../../model/app-contants';
 import { SettingsPage } from './../settings/settings';
 import { ReportListPage } from '../report-list/report-list';
 import { ReportModel } from '../../model/report-model';
-import { ReportService } from '../../providers/report-service';
+import { ReportService } from '../../providers/report.service';
 import { EditionPage } from './../edition/edition';
 import { Component } from '@angular/core';
 import { Events, Gesture, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
@@ -27,6 +27,7 @@ export class HomePage {
   activityCounterIcon: string = 'play';
   dateControl: Date = new Date();
   datePickerValue: string;
+  maxDatePickerValue: string = moment(new Date()).format(AppConstants.DATE_PICKER_FORMAT);
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public modalCtrl: ModalController, public reportService: ReportService,
@@ -35,14 +36,15 @@ export class HomePage {
     this.datePickerValue = moment(this.dateControl).format(AppConstants.DATE_PICKER_FORMAT);
     this.loadReports();
     events.subscribe(AppConstants.EVENT_REPORT_UPDATED, () => {
+      this.dateControl = moment(this.datePickerValue, AppConstants.DATE_PICKER_FORMAT).toDate();
       this.loadReports();
     });
   }
 
   loadReports(): void {
-    this.reportService.loadReportsSumary().then(r => {
+    this.reportService.loadReportsSumary(this.dateControl).then(r => {
       this.reportSumary = r;
-      console.log(r);
+      console.log("Report loaded: ", r);
     }).catch((err => {
       alert(err);
     }));
@@ -53,7 +55,7 @@ export class HomePage {
   }
 
   onAddClick(): void {
-    let modal = this.modalCtrl.create(EditionPage, { dateControl: this.dateControl });
+    let modal = this.modalCtrl.create(EditionPage, { reportDate: this.dateControl });
     modal.present();
   }
 
@@ -86,7 +88,7 @@ export class HomePage {
   }
 
   onReportSumaryClick(): void {
-    this.navCtrl.push(ReportListPage, { dateControl: this.dateControl });
+    this.navCtrl.push(ReportListPage, { reportDate: this.dateControl });
   }
 
   onActivityCounterClick(): void {
@@ -123,6 +125,11 @@ export class HomePage {
     } else {
       this.datePickerValue = momentCrtl.subtract(1, 'months').format(AppConstants.DATE_PICKER_FORMAT);
     }
+    this.events.publish(AppConstants.EVENT_REPORT_UPDATED);
+  }
+
+  onDatePickerChange() {
+    this.events.publish(AppConstants.EVENT_REPORT_UPDATED);
   }
 
 }

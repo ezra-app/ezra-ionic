@@ -1,9 +1,11 @@
-import { ReportService } from '../../providers/report-service';
+import { ReportStorageService } from './../../providers/report-storage.service';
+import { ReportService } from '../../providers/report.service';
 import { AppConstants } from './../../model/app-contants';
 import { ReportModel } from './../../model/report-model';
 import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
 import { Events } from 'ionic-angular';
+import * as moment from 'moment';
 
 /*
   Generated class for the Edition page.
@@ -19,15 +21,25 @@ export class EditionPage {
 
   report: ReportModel = new ReportModel();
   editing: boolean;
+  dateControl: Date = new Date();
+  formatedDateTitle: string;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams, public viewCtrl: ViewController,
-    public reportService: ReportService, public events: Events) {
-      
+    public reportService: ReportService, public events: Events, 
+    public reportStorageService: ReportStorageService) {
+    moment.locale('pt-br');
     if (navParams.get(AppConstants.REPORT_PARAM)) {
       this.editing = true;
       this.report = navParams.get(AppConstants.REPORT_PARAM);
     }
+    if (this.navParams.get(AppConstants.REPORT_DATE_CTRL_PARAM)) {
+      this.dateControl = this.navParams.get(AppConstants.REPORT_DATE_CTRL_PARAM);
+      this.report.date = this.dateControl;
+      this.formatedDateTitle = moment(this.dateControl).format('MMMM YYYY');
+    }
+
+    console.log("formatedDateTitle", this.formatedDateTitle);
   }
 
   ionViewDidLoad() {

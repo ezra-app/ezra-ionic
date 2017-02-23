@@ -1,7 +1,8 @@
+import { ReportStorageService } from '../providers/report-storage.service';
 import { SettingsPage } from './../pages/settings/settings';
 import { GoalsPage } from './../pages/goals/goals';
 import { ReportListPage } from '../pages/report-list/report-list';
-import { ReportService } from '../providers/report-service';
+import { ReportService } from '../providers/report.service';
 import { EditionPage } from './../pages/edition/edition';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -36,7 +37,8 @@ import { Storage } from '@ionic/storage';
   providers: [
       {provide: ErrorHandler, useClass: IonicErrorHandler}, 
       Storage,
-      ReportService
+      ReportService,
+      ReportStorageService
     ]
 })
 export class AppModule {}
