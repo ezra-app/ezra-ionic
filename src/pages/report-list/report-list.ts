@@ -4,6 +4,7 @@ import { ReportService } from '../../providers/report.service';
 import { EditionPage } from '../edition/edition';
 import { Component } from '@angular/core';
 import { AlertController, Events, ModalController, NavController, NavParams } from 'ionic-angular';
+import 'moment/locale/pt-br'
 import * as moment from 'moment';
 
 /*
@@ -140,6 +141,11 @@ export class ReportListPage {
 
   onDatePickerChange() {
     this.events.publish(AppConstants.EVENT_REPORT_UPDATED);
+  }
+
+  formatDay(date: Date): string {
+    moment.locale('pt-br');
+    return moment(date).format('dddd, DD');
   }
 
 }

@@ -32,7 +32,7 @@
     <ion-card (press)="onPress(report)" (click)="onSelectClick(report)">
       <ion-card-content no-padding>
         <ion-item-divider color="navBarColor">
-          Dia: 10
+          {{ formatDay(report.date) }}
         </ion-item-divider>
         <ion-row padding>
           <ion-icon name="clock" padding-right></ion-icon>{{ formatHours(report.hours, report.minutes) }} <br>
