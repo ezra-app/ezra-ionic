@@ -67,7 +67,7 @@ export class ReportService {
   public async removeSelecteds(reports: ReportModel[]) {
     if (reports && reports.length > 0) {
       let reportsFiltered: ReportModel[] = reports.filter(r => !r.selected);
-      await this.reportStorageService.putAll(reports[0].date, reportsFiltered).save();
+      await this.reportStorageService.putAll(ReportModel.getDate(reports[0]), reportsFiltered).save();
     }
   }
 

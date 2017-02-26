@@ -3,29 +3,34 @@ import { Injectable } from '@angular/core';
 import { ReportModel } from './../model/report-model';
 import { Storage } from '@ionic/storage';
 
+type ReportDataObj = { [key: number]: ReportDataObjValue }
+type ReportDataObjValue = { [key: number]: ReportModel[] }
+
 @Injectable()
 export class ReportStorageService {
-    private reportData: Map<number, Map<number, ReportModel[]>> = new Map<number, Map<number, ReportModel[]>>();
+    private reportData: ReportDataObj = {};
 
     constructor(public storage: Storage) {
         this.load();
     }
 
     public async load(): Promise<ReportStorageService> {
-        return await this.storage.get(AppConstants.REPORTS_LIST_STORAGE_KEY).then(data => {
-            if (data) {
-                this.reportData = data;
-            }
-            return this;
-        });
+        let data = await this.storage.get(AppConstants.REPORTS_LIST_STORAGE_KEY);
+        if (data) {
+            this.reportData = JSON.parse(data);
+            console.log("Ojb loaded: ", this.reportData);
+        } else {
+            this.reportData = {};
+        }
+        return this;
     }
 
     public put(report: ReportModel): ReportStorageService {
-        let dataByYear: Map<number, ReportModel[]> = this.getMapByYear(report.date);
-        let dataByMonth: ReportModel[] = dataByYear.get(report.date.getMonth());
+        let dataByYear: ReportDataObjValue = this.getMapByYear(ReportModel.getDate(report));
+        let dataByMonth: ReportModel[] = dataByYear[ReportModel.getDate(report).getMonth()];
         if (!dataByMonth) {
             dataByMonth = [];
-            dataByYear.set(report.date.getMonth(), dataByMonth);
+            dataByYear[ReportModel.getDate(report).getMonth()] = dataByMonth;
         }
         dataByMonth.push(report);
         return this;
@@ -42,21 +47,21 @@ export class ReportStorageService {
         }
     }
 
-    private getMapByYear(date: Date): Map<number, ReportModel[]> {
-        let dataByYear: Map<number, ReportModel[]> = this.reportData.get(date.getFullYear());
+    private getMapByYear(date: Date): ReportDataObjValue {
+        let dataByYear: ReportDataObjValue = this.reportData[date.getFullYear()];
         if (!dataByYear) {
-            dataByYear = new Map<number, ReportModel[]>();
-            this.reportData.set(date.getFullYear(), dataByYear);
+            dataByYear = {};
+            this.reportData[date.getFullYear()] = dataByYear;
         }
         return dataByYear;
     }
 
     public get(date: Date): ReportModel[] {
-        let dataByYear: Map<number, ReportModel[]> = this.reportData.get(date.getFullYear());
+        let dataByYear: ReportDataObjValue = this.reportData[date.getFullYear()];
         if (!dataByYear) {
             return [];
         }
-        let dataByMonth: ReportModel[] = dataByYear.get(date.getMonth());
+        let dataByMonth: ReportModel[] = dataByYear[date.getMonth()];
         if (!dataByMonth) {
             return [];
         }
@@ -64,20 +69,43 @@ export class ReportStorageService {
     }
 
     public remove(report: ReportModel): ReportStorageService {
-        let reportsFiltered: ReportModel[] = this.get(report.date).filter(r => r.id != report.id);
-        if (reportsFiltered && reportsFiltered.length > 0) {
-            this.reportData.get(report.date.getFullYear()).set(report.date.getMonth(), reportsFiltered);
+        let reportsFiltered: ReportModel[] = this.get(ReportModel.getDate(report)).filter(r => r.id != report.id);
+        if (reportsFiltered) {
+            this.getMapByYear(ReportModel.getDate(report))[ReportModel.getDate(report).getMonth()] = reportsFiltered;
         }
         return this;
     }
 
     public putAll(date: Date, reports: ReportModel[]): ReportStorageService {
-        this.getMapByYear(date).set(date.getMonth(), reports);
+        this.getMapByYear(date)[date.getMonth()] = reports;
         return this;
     }
 
     public async save() {
-        await this.storage.set(AppConstants.REPORTS_LIST_STORAGE_KEY, this.reportData);
+        await this.storage.set(AppConstants.REPORTS_LIST_STORAGE_KEY, JSON.stringify(this.reportData));
+        console.log("Obj saved:", this.reportData);
+    }
+
+    private mapToObj(map: any): {} {
+        let obj = Object.create(null);
+        console.log("Entein na conversao");
+        map.forEach((value, key, map) => {
+            console.log("Iterando");
+            if (value instanceof Map) {
+                this.mapToObj(value);
+            } else {
+                obj[key] = value;
+            }
+        });
+        return obj;
+    }
+
+    private objToMap(obj): any {
+        let map = new Map();
+        for (let k of Object.keys(obj)) {
+            map.set(k, obj[k]);
+        }
+        return map;
     }
 
 }
