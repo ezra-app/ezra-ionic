@@ -1,7 +1,11 @@
 <ion-header>
 
   <ion-navbar color="navBarColor">
-    <ion-title>{{formatedDateTitle}}</ion-title>
+    <ion-title>
+      <ion-datetime no-padding displayFormat="DD-MM-YYYY " [(ngModel)]="datePickerValue" (ionChange)="onDatePickerChange()"
+      cancelText="Cancelar" doneText="OK"  [max]="maxDatePickerValue"
+      monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"></ion-datetime>
+    </ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="onConfirmClick()" padding-right>
         <ion-icon name="done-all" color="orangeColor"></ion-icon>

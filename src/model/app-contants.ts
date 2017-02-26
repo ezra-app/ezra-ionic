@@ -7,7 +7,7 @@ export class AppConstants {
     public static readonly REPORT_DATE_CTRL_PARAM: string = 'reportDate';
 
     //Others
-    public static readonly DATE_PICKER_FORMAT: string = 'YYYY-MM';
+    public static readonly DATE_PICKER_FORMAT: string = 'YYYY-MM-DD';
     public static readonly MAX_DATE_PICKER_VALUE_FORMAT: string = 'YYYY-MM-DD';
     public static readonly TIME_FORMAT: string = 'HH:mm';
     

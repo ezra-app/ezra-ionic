@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
 import { Events } from 'ionic-angular';
 import * as moment from 'moment';
+moment.locale('pt-br');
 
 /*
   Generated class for the Edition page.
@@ -24,19 +25,21 @@ export class EditionPage {
   dateControl: Date = new Date();
   formatedDateTitle: string;
 
+  datePickerValue: string;
+  maxDatePickerValue: string = moment(new Date()).format(AppConstants.DATE_PICKER_FORMAT);
+
   constructor(public navCtrl: NavController,
     public navParams: NavParams, public viewCtrl: ViewController,
-    public reportService: ReportService, public events: Events, 
+    public reportService: ReportService, public events: Events,
     public reportStorageService: ReportStorageService) {
-    moment.locale('pt-br');
     if (navParams.get(AppConstants.REPORT_PARAM)) {
       this.editing = true;
       this.report = navParams.get(AppConstants.REPORT_PARAM);
     }
     if (this.navParams.get(AppConstants.REPORT_DATE_CTRL_PARAM)) {
       this.dateControl = this.navParams.get(AppConstants.REPORT_DATE_CTRL_PARAM);
-      this.report.date = this.dateControl;
-      this.formatedDateTitle = moment(this.dateControl).format('MMMM YYYY');
+      this.report.setDate(this.dateControl);
+      this.datePickerValue = moment(this.dateControl).format(AppConstants.DATE_PICKER_FORMAT);
     }
 
     console.log("formatedDateTitle", this.formatedDateTitle);
@@ -64,6 +67,11 @@ export class EditionPage {
 
   onCancelClick(): void {
     this.viewCtrl.dismiss().then(() => this.events.publish(AppConstants.EVENT_REPORT_UPDATED));
+  }
+
+  onDatePickerChange() {
+    this.report.setDate(moment(this.datePickerValue, AppConstants.DATE_PICKER_FORMAT).toDate());
+    this.events.publish(AppConstants.EVENT_REPORT_UPDATED);
   }
 
 }
