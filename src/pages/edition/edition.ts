@@ -38,7 +38,7 @@ export class EditionPage {
     }
     if (this.navParams.get(AppConstants.REPORT_DATE_CTRL_PARAM)) {
       this.dateControl = this.navParams.get(AppConstants.REPORT_DATE_CTRL_PARAM);
-      this.report.setDate(this.dateControl);
+      this.setDate(this.dateControl);
       this.datePickerValue = moment(this.dateControl).format(AppConstants.DATE_PICKER_FORMAT);
     }
 
@@ -70,8 +70,14 @@ export class EditionPage {
   }
 
   onDatePickerChange() {
-    this.report.setDate(moment(this.datePickerValue, AppConstants.DATE_PICKER_FORMAT).toDate());
+    this.setDate(moment(this.datePickerValue, AppConstants.DATE_PICKER_FORMAT).toDate());
     this.events.publish(AppConstants.EVENT_REPORT_UPDATED);
+  }
+
+  setDate(date: Date) {
+    this.report.year = this.dateControl.getFullYear().toString();
+    this.report.month = this.dateControl.getMonth().toString();
+    this.report.day = this.dateControl.getDate().toString();
   }
 
 }

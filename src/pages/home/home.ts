@@ -7,6 +7,7 @@ import { EditionPage } from './../edition/edition';
 import { Component } from '@angular/core';
 import { Events, Gesture, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
+import 'moment-duration-format';
 import * as moment from 'moment';
 
 const DIRECTION_LEFT: string = '2';
@@ -84,7 +85,7 @@ export class HomePage {
     if (!minutes || minutes == '') {
       minutes = '0'
     }
-    return moment().hour(parseInt(hours)).minute(parseInt(minutes)).format(AppConstants.TIME_FORMAT);
+    return moment.duration((parseInt(hours) * 60) + parseInt(minutes), "minutes").format("hh:mm");
   }
 
   onReportSumaryClick(): void {

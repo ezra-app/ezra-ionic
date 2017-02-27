@@ -4,6 +4,7 @@ import { ReportService } from '../../providers/report.service';
 import { EditionPage } from '../edition/edition';
 import { Component } from '@angular/core';
 import { AlertController, Events, ModalController, NavController, NavParams } from 'ionic-angular';
+import 'moment-duration-format';
 import 'moment/locale/pt-br'
 import * as moment from 'moment';
 
@@ -136,7 +137,7 @@ export class ReportListPage {
     if (!minutes || minutes == '') {
       minutes = '0'
     }
-    return moment().hour(parseInt(hours)).minute(parseInt(minutes)).format(AppConstants.TIME_FORMAT);
+    return moment.duration((parseInt(hours) * 60) + parseInt(minutes), "minutes").format("hh:mm");
   }
 
   onDatePickerChange() {
