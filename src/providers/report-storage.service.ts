@@ -18,7 +18,6 @@ export class ReportStorageService {
         let data = await this.storage.get(AppConstants.REPORTS_LIST_STORAGE_KEY);
         if (data) {
             this.reportData = JSON.parse(data);
-            console.log("Ojb loaded: ", this.reportData);
         } else {
             this.reportData = {};
         }
@@ -83,29 +82,5 @@ export class ReportStorageService {
 
     public async save() {
         await this.storage.set(AppConstants.REPORTS_LIST_STORAGE_KEY, JSON.stringify(this.reportData));
-        console.log("Obj saved:", this.reportData);
     }
-
-    private mapToObj(map: any): {} {
-        let obj = Object.create(null);
-        console.log("Entein na conversao");
-        map.forEach((value, key, map) => {
-            console.log("Iterando");
-            if (value instanceof Map) {
-                this.mapToObj(value);
-            } else {
-                obj[key] = value;
-            }
-        });
-        return obj;
-    }
-
-    private objToMap(obj): any {
-        let map = new Map();
-        for (let k of Object.keys(obj)) {
-            map.set(k, obj[k]);
-        }
-        return map;
-    }
-
 }

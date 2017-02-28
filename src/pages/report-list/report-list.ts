@@ -1,11 +1,10 @@
-import { AppConstants } from './../../model/app-contants';
 import { ReportModel } from '../../model/report-model';
 import { ReportService } from '../../providers/report.service';
 import { EditionPage } from '../edition/edition';
+import { AppConstants } from './../../model/app-contants';
+import { ReportUtils } from './../../providers/report-utils';
 import { Component } from '@angular/core';
 import { AlertController, Events, ModalController, NavController, NavParams } from 'ionic-angular';
-import 'moment-duration-format';
-import 'moment/locale/pt-br'
 import * as moment from 'moment';
 
 /*
@@ -48,7 +47,6 @@ export class ReportListPage {
 
   private async fetchReports() {
     this.reports = await this.reportService.loadAllReportsOrdered(this.dateControl);
-    console.log(this.reports);
   }
 
   public onEditClick(report: ReportModel) {
@@ -85,7 +83,6 @@ export class ReportListPage {
         {
           text: 'Nao',
           handler: () => {
-            console.log('Não');
           }
         }
       ]
@@ -116,8 +113,6 @@ export class ReportListPage {
     if (this.selecteds <= 0) {
       this.muliSelectEnabled = false;
     }
-
-    console.log("selecteds: ", this.selecteds);
   }
 
   async onRemoveSelectedClick() {
@@ -131,13 +126,7 @@ export class ReportListPage {
   }
 
   formatHours(hours: string, minutes: string): string {
-    if (!hours || hours == '') {
-      hours = '0'
-    }
-    if (!minutes || minutes == '') {
-      minutes = '0'
-    }
-    return moment.duration((parseInt(hours) * 60) + parseInt(minutes), "minutes").format("hh:mm");
+    return ReportUtils.formatHours(hours, minutes);
   }
 
   onDatePickerChange() {
@@ -145,8 +134,6 @@ export class ReportListPage {
   }
 
   formatDay(date: Date): string {
-    moment.locale('pt-br');
-    return moment(date).format('dddd, DD');
+    return ReportUtils.formatDay(date);
   }
-
 }

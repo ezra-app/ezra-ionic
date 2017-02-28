@@ -1,13 +1,13 @@
-import { AppConstants } from './../../model/app-contants';
-import { SettingsPage } from './../settings/settings';
-import { ReportListPage } from '../report-list/report-list';
 import { ReportModel } from '../../model/report-model';
 import { ReportService } from '../../providers/report.service';
+import { ReportListPage } from '../report-list/report-list';
+import { AppConstants } from './../../model/app-contants';
+import { ReportUtils } from './../../providers/report-utils';
 import { EditionPage } from './../edition/edition';
+import { SettingsPage } from './../settings/settings';
 import { Component } from '@angular/core';
 import { Events, Gesture, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
-import 'moment-duration-format';
 import * as moment from 'moment';
 
 const DIRECTION_LEFT: string = '2';
@@ -45,7 +45,6 @@ export class HomePage {
   loadReports(): void {
     this.reportService.loadReportsSumary(this.dateControl).then(r => {
       this.reportSumary = r;
-      console.log("Report loaded: ", r);
     }).catch((err => {
       alert(err);
     }));
@@ -61,31 +60,11 @@ export class HomePage {
   }
 
   formatNumber(value: number): string {
-    if (value == undefined || isNaN(value)) {
-      return '0';
-    } else {
-      return value.toString();
-    }
-  }
-
-  normalizeHour(hour: string): string {
-    if (hour == undefined) {
-      return '00';
-    } else if (hour.length == 1) {
-      return '0' + hour;
-    } else {
-      return hour;
-    }
+    return ReportUtils.formatNumber(value);
   }
 
   formatHours(hours: string, minutes: string): string {
-    if (!hours || hours == '') {
-      hours = '0'
-    }
-    if (!minutes || minutes == '') {
-      minutes = '0'
-    }
-    return moment.duration((parseInt(hours) * 60) + parseInt(minutes), "minutes").format("hh:mm");
+    return ReportUtils.formatHours(hours, minutes);
   }
 
   onReportSumaryClick(): void {

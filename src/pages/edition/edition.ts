@@ -42,7 +42,6 @@ export class EditionPage {
       this.datePickerValue = moment(this.dateControl).format(AppConstants.DATE_PICKER_FORMAT);
     }
 
-    console.log("formatedDateTitle", this.formatedDateTitle);
   }
 
   ionViewDidLoad() {

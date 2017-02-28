@@ -1,3 +1,4 @@
+import { ReportUtils } from './report-utils';
 import { ReportStorageService } from './report-storage.service';
 import 'rxjs/add/operator/map';
 import { ReportModel, ReportStorage } from '../model/report-model';
@@ -26,22 +27,7 @@ export class ReportService {
 
   public async loadReportsSumary(date: Date): Promise<ReportModel> {
     let reports: ReportModel[] = await this.loadAllReports(date);
-    if (reports && reports.length > 0) {
-      return reports.reduce((prev, curr, currIndex, array) => {
-        var reportSumary = new ReportModel();
-        reportSumary.hours = this.sumAsNumber(prev.hours, curr.hours);
-        reportSumary.minutes = this.sumAsNumber(prev.minutes, curr.minutes);
-        reportSumary.publications = this.sumAsNumber(prev.publications, curr.publications);
-        reportSumary.revisits = this.sumAsNumber(prev.revisits, curr.revisits);
-        reportSumary.studies = this.sumAsNumber(prev.studies, curr.studies);
-        reportSumary.videos = this.sumAsNumber(prev.videos, curr.videos);
-
-        return reportSumary;
-      });
-    } else {
-      console.log("returned new report");
-      return new ReportModel();
-    }
+    return ReportUtils.summaryReports(reports);
   }
 
   public async loadAllReports(date: Date): Promise<ReportModel[]> {
@@ -70,15 +56,4 @@ export class ReportService {
       await this.reportStorageService.putAll(ReportModel.getDate(reports[0]), reportsFiltered).save();
     }
   }
-
-  private sumAsNumber(...values: any[]): string {
-    var result: number = 0;
-    values.forEach(value => {
-      if (value && !isNaN(value)) {
-        result += parseInt(value);
-      }
-    });
-    return result.toString();
-  }
-
 }
