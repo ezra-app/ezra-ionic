@@ -51,7 +51,7 @@ export class ReportListPage {
 
   public onEditClick(report: ReportModel) {
     if (!this.muliSelectEnabled) {
-      let modal = this.modalCtrl.create(EditionPage, { report: report, reportDate: this.dateControl });
+      let modal = this.modalCtrl.create(EditionPage, { report: report, reportDate: ReportModel.getDate(report) });
       modal.present();
     }
   }
@@ -135,5 +135,9 @@ export class ReportListPage {
 
   formatDay(date: Date): string {
     return ReportUtils.formatDay(date);
+  }
+
+  getDate(report: ReportModel): Date {
+    return ReportModel.getDate(report);
   }
 }
