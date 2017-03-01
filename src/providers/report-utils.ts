@@ -59,4 +59,16 @@ export class ReportUtils {
         });
         return result.toString();
     }
+
+    public static formatShareMessage(report: ReportModel, date: Date): string {
+        moment.locale('pt-br');
+        let reportMessage = `Meu relatório ${moment(date).format('MMM YYYY')} :
+        - Horas: ${this.formatHours(report.hours, report.minutes)}
+        - Publicações: ${this.formatNumber(parseInt(report.publications))}
+        - Vídeos: ${this.formatNumber(parseInt(report.videos))}
+        - Revisitas:  ${this.formatNumber(parseInt(report.revisits))}
+        - Estudos:  ${this.formatNumber(parseInt(report.studies))}
+        `;
+        return reportMessage;
+    }
 }

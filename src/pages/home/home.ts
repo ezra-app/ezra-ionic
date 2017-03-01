@@ -6,6 +6,7 @@ import { ReportUtils } from './../../providers/report-utils';
 import { EditionPage } from './../edition/edition';
 import { SettingsPage } from './../settings/settings';
 import { Component } from '@angular/core';
+import { SocialSharing } from 'ionic-native';
 import { Events, Gesture, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import * as moment from 'moment';
@@ -93,6 +94,23 @@ export class HomePage {
 
   onSettingsButtonClick(): void {
     this.navCtrl.push(SettingsPage);
+  }
+
+
+  onShareButtonClick() {
+    SocialSharing.shareViaWhatsApp(ReportUtils.formatShareMessage(this.reportSumary, this.dateControl)).then(() => {
+      this.showToast("Relatório enviado");
+    }).catch((err) => {
+      alert("Whatsapp não suportado");
+    });
+  }
+
+  onEmailButtonClick() {
+    SocialSharing.shareViaEmail(ReportUtils.formatShareMessage(this.reportSumary, this.dateControl), "Meu Relatório", ["betolinck@gmail.com"]).then(() => {
+      this.showToast("Relatório enviado");
+    }).catch((err) => {
+      alert("Email não suportado");
+    });
   }
 
   onSwipe(event: Gesture) {
