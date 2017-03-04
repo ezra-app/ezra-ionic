@@ -7,8 +7,7 @@ import { EditionPage } from './../edition/edition';
 import { SettingsPage } from './../settings/settings';
 import { Component } from '@angular/core';
 import { SocialSharing } from 'ionic-native';
-import { Events, Gesture, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
-import { ModalController } from 'ionic-angular';
+import { Events, Gesture, NavController, NavParams, ToastController, ViewController, ModalController } from 'ionic-angular';
 import * as moment from 'moment';
 
 const DIRECTION_LEFT: string = '2';
@@ -59,7 +58,7 @@ export class HomePage {
     let modal = this.modalCtrl.create(EditionPage, { reportDate: this.dateControl });
     modal.present();
   }
-
+  
   formatNumber(value: number): string {
     return ReportUtils.formatNumber(value);
   }

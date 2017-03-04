@@ -52,6 +52,7 @@ export class EditionPage {
     if (this.editing) {
       await this.reportService.removeReport(this.report);
     }
+    this.setDate(moment(this.datePickerValue, AppConstants.DATE_PICKER_FORMAT).toDate());
     this.saveReport();
   }
 
@@ -66,11 +67,6 @@ export class EditionPage {
 
   onCancelClick(): void {
     this.viewCtrl.dismiss().then(() => this.events.publish(AppConstants.EVENT_REPORT_UPDATED));
-  }
-
-  onDatePickerChange() {
-    this.setDate(moment(this.datePickerValue, AppConstants.DATE_PICKER_FORMAT).toDate());
-    this.events.publish(AppConstants.EVENT_REPORT_UPDATED);
   }
 
   setDate(date: Date) {
