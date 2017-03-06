@@ -7,15 +7,85 @@
 <ion-header>
 
   <ion-navbar>
-     <button ion-button menuToggle>
+    <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Configurações</ion-title>
   </ion-navbar>
-
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="settingsType">
+      <ion-segment-button value="general">
+        Geral
+      </ion-segment-button>
+      <ion-segment-button value="share">
+        Envio
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
 
 <ion-content padding>
-  <ion-icon name="flask"></ion-icon> Em Construção! <ion-icon name="bonfire"></ion-icon>
+  <div [ngSwitch]="settingsType">
+    <ion-list *ngSwitchCase="'general'">
+      <ion-item-group>
+        <ion-item-divider color="light">
+          Configurações do Serviço
+        </ion-item-divider>
+      <ion-item>
+        <ion-label>Modalidade</ion-label>
+        <ion-select [(ngModel)]="publisherType">
+          <ion-option value="pa">Pioneiro Auxiliar</ion-option>
+          <ion-option value="pr">Pioneiro Regular</ion-option>
+          <ion-option value="pe">Pioneiro Especial</ion-option>
+          <ion-option value="pu">Publicador</ion-option>
+        </ion-select>
+      </ion-item>
+      </ion-item-group>
+      <ion-item *ngIf="publisherType == 'pu' || publisherType == 'pa'">
+        <ion-label>Requisito de Horas</ion-label>
+        <ion-input [(ngModel)]="hoursTarget" type="number"></ion-input>
+      </ion-item>
+      <ion-item-group>
+        <ion-item-divider color="light">
+          Dias de atividades
+        </ion-item-divider>
+        <ion-item>
+          <ion-label>Segunda</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Terça</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Quarta</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Quinta</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Sexta</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Sábado</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Domingo</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+      </ion-item-group>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'share'">
+      <ion-item>
+        <ion-label>Email</ion-label>
+        <ion-input [(ngModel)]="email" type="email"></ion-input>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>
