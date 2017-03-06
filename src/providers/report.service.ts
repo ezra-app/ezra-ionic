@@ -1,11 +1,9 @@
-import { ReportUtils } from './report-utils';
-import { ReportStorageService } from './report-storage.service';
 import 'rxjs/add/operator/map';
-import { ReportModel, ReportStorage } from '../model/report-model';
-import { AppConstants } from './../model/app-contants';
+import { ReportModel } from '../model/report-model';
+import { ReportStorageService } from './report-storage.service';
+import { ReportUtils } from './report-utils';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Dictionary } from 'typescript-collections';
 
 /*
   Generated class for the ReportService provider.

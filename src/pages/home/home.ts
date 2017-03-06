@@ -6,8 +6,16 @@ import { ReportUtils } from './../../providers/report-utils';
 import { EditionPage } from './../edition/edition';
 import { SettingsPage } from './../settings/settings';
 import { Component } from '@angular/core';
+import {
+    Events,
+    Gesture,
+    ModalController,
+    NavController,
+    NavParams,
+    ToastController,
+    ViewController
+} from 'ionic-angular';
 import { SocialSharing } from 'ionic-native';
-import { Events, Gesture, NavController, NavParams, ToastController, ViewController, ModalController } from 'ionic-angular';
 import * as moment from 'moment';
 
 const DIRECTION_LEFT: string = '2';

@@ -1,7 +1,6 @@
-import { ReportModel } from './../model/report-model';
-import { Injectable } from '@angular/core';
 import 'moment-duration-format';
-import 'moment/locale/pt-br'
+import 'moment/locale/pt-br';
+import { ReportModel } from './../model/report-model';
 import * as moment from 'moment';
 
 export class ReportUtils {
