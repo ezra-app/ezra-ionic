@@ -34,7 +34,7 @@ export class EditionPage {
     public reportStorageService: ReportStorageService) {
     if (navParams.get(AppConstants.REPORT_PARAM)) {
       this.editing = true;
-      this.report = navParams.get(AppConstants.REPORT_PARAM);
+      this.fillReport(navParams.get(AppConstants.REPORT_PARAM));
     }
     if (this.navParams.get(AppConstants.REPORT_DATE_CTRL_PARAM)) {
       this.dateControl = this.navParams.get(AppConstants.REPORT_DATE_CTRL_PARAM);
@@ -48,10 +48,24 @@ export class EditionPage {
     console.log('ionViewDidLoad EditionPage');
   }
 
+  fillReport(reportLoaded: ReportModel): void {
+    this.report.hours = reportLoaded.hours;
+    this.report.minutes = reportLoaded.minutes;
+    this.report.day = reportLoaded.day;
+    this.report.month = reportLoaded.month;
+    this.report.year = reportLoaded.year;
+    this.report.publications = reportLoaded.publications;
+    this.report.revisits = reportLoaded.revisits;
+    this.report.studies = reportLoaded.studies;
+    this.report.videos = reportLoaded.videos;
+    this.report.id = reportLoaded.id;
+  }
+
   async onConfirmClick() {
     if (this.editing) {
       await this.reportService.removeReport(this.report);
     }
+    console.log(this.datePickerValue);
     this.setDate(moment(this.datePickerValue, AppConstants.DATE_PICKER_FORMAT).toDate());
     this.saveReport();
   }
@@ -73,6 +87,12 @@ export class EditionPage {
     this.report.year = this.dateControl.getFullYear().toString();
     this.report.month = this.dateControl.getMonth().toString();
     this.report.day = this.dateControl.getDate().toString();
+
+    console.log(ReportModel.getDate(this.report));
+  }
+
+  onDatePickerChange() {
+    this.dateControl = moment(this.datePickerValue, AppConstants.DATE_PICKER_FORMAT).toDate();
   }
 
 }
