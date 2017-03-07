@@ -6,14 +6,14 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="navBarColor">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Configurações</ion-title>
   </ion-navbar>
   <ion-toolbar no-border-top>
-    <ion-segment [(ngModel)]="settingsType">
+    <ion-segment color="navBarColor" [(ngModel)]="settingsType">
       <ion-segment-button value="general">
         Geral
       </ion-segment-button>
@@ -25,29 +25,29 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content no-padding>
   <div [ngSwitch]="settingsType">
     <ion-list *ngSwitchCase="'general'">
       <ion-item-group>
-        <ion-item-divider color="light">
+        <ion-item-divider color="navBarColor">
           Configurações do Serviço
         </ion-item-divider>
-      <ion-item>
-        <ion-label>Modalidade</ion-label>
-        <ion-select [(ngModel)]="publisherType">
-          <ion-option value="pa">Pioneiro Auxiliar</ion-option>
-          <ion-option value="pr">Pioneiro Regular</ion-option>
-          <ion-option value="pe">Pioneiro Especial</ion-option>
-          <ion-option value="pu">Publicador</ion-option>
-        </ion-select>
-      </ion-item>
+        <ion-item>
+          <ion-label>Modalidade</ion-label>
+          <ion-select [(ngModel)]="publisherType">
+            <ion-option value="pa">P. Auxiliar</ion-option>
+            <ion-option value="pr">P. Regular</ion-option>
+            <ion-option value="pe">P. Especial</ion-option>
+            <ion-option value="pu">Publicador</ion-option>
+          </ion-select>
+        </ion-item>
       </ion-item-group>
       <ion-item *ngIf="publisherType == 'pu' || publisherType == 'pa'">
         <ion-label>Requisito de Horas</ion-label>
         <ion-input [(ngModel)]="hoursTarget" type="number"></ion-input>
       </ion-item>
       <ion-item-group>
-        <ion-item-divider color="light">
+        <ion-item-divider color="navBarColor">
           Dias de atividades
         </ion-item-divider>
         <ion-item>
@@ -83,9 +83,18 @@
 
     <ion-list *ngSwitchCase="'share'">
       <ion-item>
+        <ion-label>Envio por emal</ion-label>
+        <ion-toggle [(ngModel)]="useEmal"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>Envio por whatsapp</ion-label>
+        <ion-toggle [(ngModel)]="useWhats"></ion-toggle>
+      </ion-item>
+      <ion-item *ngIf="useEmal">
         <ion-label>Email</ion-label>
         <ion-input [(ngModel)]="email" type="email"></ion-input>
       </ion-item>
     </ion-list>
+    <button ion-button end> Salvar</button>
   </div>
 </ion-content>
