@@ -5,15 +5,22 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar color="navBarColor">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Configurações</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only padding-right>
+        <ion-icon name="done-all" color="orangeColor"></ion-icon>
+      </button>
+      <button ion-button icon-only padding-right>
+        <ion-icon name="close" color="orangeColor"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-  <ion-toolbar no-border-top>
-    <ion-segment color="navBarColor" [(ngModel)]="settingsType">
+  <ion-toolbar color="navBarColor" no-border-top>
+    <ion-segment color="light" [(ngModel)]="settingsType">
       <ion-segment-button value="general">
         Geral
       </ion-segment-button>
@@ -95,6 +102,5 @@
         <ion-input [(ngModel)]="email" type="email"></ion-input>
       </ion-item>
     </ion-list>
-    <button ion-button end> Salvar</button>
   </div>
 </ion-content>
