@@ -1,15 +1,14 @@
-import { ReportStorageService } from '../providers/report-storage.service';
-import { SettingsPage } from './../pages/settings/settings';
-import { GoalsPage } from './../pages/goals/goals';
+import { HomePage } from '../pages/home/home';
 import { ReportListPage } from '../pages/report-list/report-list';
+import { ReportStorageService } from '../providers/report-storage.service';
 import { ReportService } from '../providers/report.service';
 import { EditionPage } from './../pages/edition/edition';
-import { NgModule, ErrorHandler } from '@angular/core';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { GoalsPage } from './../pages/goals/goals';
+import { SettingsPage } from './../pages/settings/settings';
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { Page2 } from '../pages/page2/page2';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 @NgModule({
   declarations: [
@@ -17,7 +16,6 @@ import { Storage } from '@ionic/storage';
     HomePage,
     EditionPage,
     ReportListPage,
-    Page2,
     GoalsPage,
     SettingsPage
   ],
@@ -30,7 +28,6 @@ import { Storage } from '@ionic/storage';
     HomePage,
     EditionPage,
     ReportListPage,
-    Page2,
     GoalsPage,
     SettingsPage
   ],

@@ -1,5 +1,4 @@
 import { HomePage } from '../pages/home/home';
-import { Page2 } from '../pages/page2/page2';
 import { ReportListPage } from '../pages/report-list/report-list';
 import { GoalsPage } from './../pages/goals/goals';
 import { SettingsPage } from './../pages/settings/settings';
@@ -26,8 +25,7 @@ export class MyApp {
       { title: 'Início', component: HomePage, icon: "home" },
       { title: 'Detalhe', component: ReportListPage, icon: "list" },
       { title: 'Metas', component: GoalsPage, icon: "football" },
-      { title: 'Configurações', component: SettingsPage, icon: "settings" },
-      { title: 'Page Two', component: Page2, icon: "game" },
+      { title: 'Configurações', component: SettingsPage, icon: "settings" }
     ];
 
   }
