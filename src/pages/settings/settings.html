@@ -11,10 +11,10 @@
     </button>
     <ion-title>Configurações</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only padding-right>
+      <button ion-button icon-only padding-right (click)="onConfirmClick()">
         <ion-icon name="done-all" color="orangeColor"></ion-icon>
       </button>
-      <button ion-button icon-only padding-right>
+      <button ion-button icon-only padding-right (click)="onCancelClick()">
         <ion-icon name="close" color="orangeColor"></ion-icon>
       </button>
     </ion-buttons>
@@ -41,7 +41,7 @@
         </ion-item-divider>
         <ion-item>
           <ion-label>Modalidade</ion-label>
-          <ion-select [(ngModel)]="publisherType">
+          <ion-select [(ngModel)]="settings.general.publisherType">
             <ion-option value="pa">P. Auxiliar</ion-option>
             <ion-option value="pr">P. Regular</ion-option>
             <ion-option value="pe">P. Especial</ion-option>
@@ -49,9 +49,9 @@
           </ion-select>
         </ion-item>
       </ion-item-group>
-      <ion-item *ngIf="publisherType == 'pu' || publisherType == 'pa'">
+      <ion-item *ngIf="settings.general.publisherType == 'pu' || settings.general.publisherType == 'pa'">
         <ion-label>Requisito de Horas</ion-label>
-        <ion-input [(ngModel)]="hoursTarget" type="number"></ion-input>
+        <ion-input [(ngModel)]="settings.general.hoursTarget" type="number"></ion-input>
       </ion-item>
       <ion-item-group>
         <ion-item-divider color="navBarColor">
@@ -59,31 +59,31 @@
         </ion-item-divider>
         <ion-item>
           <ion-label>Segunda</ion-label>
-          <ion-checkbox></ion-checkbox>
+          <ion-checkbox [(ngModel)]="settings.general.weekSettings.monday"></ion-checkbox>
         </ion-item>
         <ion-item>
           <ion-label>Terça</ion-label>
-          <ion-checkbox></ion-checkbox>
+          <ion-checkbox [(ngModel)]="settings.general.weekSettings.tuesday"></ion-checkbox>
         </ion-item>
         <ion-item>
           <ion-label>Quarta</ion-label>
-          <ion-checkbox></ion-checkbox>
+          <ion-checkbox [(ngModel)]="settings.general.weekSettings.wednesday"></ion-checkbox>
         </ion-item>
         <ion-item>
           <ion-label>Quinta</ion-label>
-          <ion-checkbox></ion-checkbox>
+          <ion-checkbox [(ngModel)]="settings.general.weekSettings.thursday"></ion-checkbox>
         </ion-item>
         <ion-item>
           <ion-label>Sexta</ion-label>
-          <ion-checkbox></ion-checkbox>
+          <ion-checkbox [(ngModel)]="settings.general.weekSettings.friday"></ion-checkbox>
         </ion-item>
         <ion-item>
           <ion-label>Sábado</ion-label>
-          <ion-checkbox></ion-checkbox>
+          <ion-checkbox [(ngModel)]="settings.general.weekSettings.saturday"></ion-checkbox>
         </ion-item>
         <ion-item>
           <ion-label>Domingo</ion-label>
-          <ion-checkbox></ion-checkbox>
+          <ion-checkbox [(ngModel)]="settings.general.weekSettings.sunday"></ion-checkbox>
         </ion-item>
       </ion-item-group>
     </ion-list>
@@ -91,15 +91,15 @@
     <ion-list *ngSwitchCase="'share'">
       <ion-item>
         <ion-label>Envio por emal</ion-label>
-        <ion-toggle [(ngModel)]="useEmal"></ion-toggle>
+        <ion-toggle [(ngModel)]="settings.share.useEmal"></ion-toggle>
+      </ion-item>
+      <ion-item *ngIf="settings.share.useEmal">
+        <ion-label>Email</ion-label>
+        <ion-input [(ngModel)]="settings.share.email" type="email"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>Envio por whatsapp</ion-label>
-        <ion-toggle [(ngModel)]="useWhats"></ion-toggle>
-      </ion-item>
-      <ion-item *ngIf="useEmal">
-        <ion-label>Email</ion-label>
-        <ion-input [(ngModel)]="email" type="email"></ion-input>
+        <ion-toggle [(ngModel)]="settings.share.useWhatsapp"></ion-toggle>
       </ion-item>
     </ion-list>
   </div>

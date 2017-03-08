@@ -13,6 +13,7 @@ export class AppConstants {
     
     //Storage
     public static readonly REPORTS_LIST_STORAGE_KEY: string = 'reports:list';
+    public static readonly SETTINGS_STORAGE_KEY: string = 'storage:settings';
 
 
 }
