@@ -106,18 +106,12 @@ export class HomePage {
 
   onShareButtonClick() {
     SocialSharing.shareViaWhatsApp(ReportUtils.formatShareMessage(this.reportSumary, this.dateControl)).then(() => {
-      this.showToast("Relatório enviado");
-    }).catch((err) => {
-      alert("Whatsapp não suportado");
-    });
+    }).catch((err) => {});
   }
 
   onEmailButtonClick() {
     SocialSharing.shareViaEmail(ReportUtils.formatShareMessage(this.reportSumary, this.dateControl), "Meu Relatório", ["betolinck@gmail.com"]).then(() => {
-      this.showToast("Relatório enviado");
-    }).catch((err) => {
-      alert("Email não suportado");
-    });
+    }).catch((err) => {});
   }
 
   onSwipe(event: Gesture) {
