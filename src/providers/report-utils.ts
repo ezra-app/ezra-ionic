@@ -70,4 +70,8 @@ export class ReportUtils {
         `;
         return reportMessage;
     }
+
+    public static getHoursInMinutes(model: ReportModel) {
+        return (parseInt(model.hours) * 60) + parseInt(model.minutes);
+    }
 }

@@ -58,13 +58,13 @@
       Minhas Metas
     </ion-item-divider>
     <ion-item>
-      Minha meta é 50 horas
+      Minha meta é {{ getHoutTarget() }} hrs
     </ion-item>
     <ion-item>
-      Preciso de 2 horas por dia
+      Preciso de {{ getHourPerDay() }} hrs por dia
     </ion-item>
     <ion-item>
-      Faltam 10 horas para acabar
+      Faltam {{ getHoursLeft() }} hrs para acabar
     </ion-item>
   </ion-list>
 

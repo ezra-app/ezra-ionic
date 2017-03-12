@@ -1,3 +1,4 @@
+import { StatisticsService } from '../providers/statistics-service';
 import { HomePage } from '../pages/home/home';
 import { ReportListPage } from '../pages/report-list/report-list';
 import { ReportStorageService } from '../providers/report-storage.service';
@@ -35,7 +36,8 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
       {provide: ErrorHandler, useClass: IonicErrorHandler}, 
       Storage,
       ReportService,
-      ReportStorageService
+      ReportStorageService,
+      StatisticsService
     ]
 })
 export class AppModule {}

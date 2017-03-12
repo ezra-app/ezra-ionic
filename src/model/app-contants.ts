@@ -1,6 +1,7 @@
 export class AppConstants {
     //Events
     public static readonly EVENT_REPORT_UPDATED: string = 'report:updated';
+    public static readonly EVENT_SETTINGS_UPDATED: string = 'settings:updated';
 
     //Params
     public static readonly REPORT_PARAM: string = 'report';

@@ -1,3 +1,4 @@
+import { StatisticsService } from '../../providers/statistics-service';
 import { ReportModel } from '../../model/report-model';
 import { ReportService } from '../../providers/report.service';
 import { ReportListPage } from '../report-list/report-list';
@@ -40,7 +41,8 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public modalCtrl: ModalController, public reportService: ReportService,
-    public viewCtrl: ViewController, public events: Events, public toastCtrl: ToastController) {
+    public viewCtrl: ViewController, public events: Events, public toastCtrl: ToastController,
+    public statisticsService: StatisticsService) {
 
     this.datePickerValue = moment(this.dateControl).format(AppConstants.DATE_PICKER_FORMAT);
     this.loadReports();
@@ -129,6 +131,18 @@ export class HomePage {
 
   onDatePickerChange() {
     this.events.publish(AppConstants.EVENT_REPORT_UPDATED);
+  }
+
+  getHourPerDay(): string {
+    return ReportUtils.formatHours('0', this.statisticsService.calculatePerDayInMinutes(this.reportSumary).toString());
+  }
+
+  getHoutTarget(): number {
+    return this.statisticsService.getHoursTarget();
+  }
+
+  getHoursLeft():  string {
+    return ReportUtils.formatHours('0', this.statisticsService.getHoursLeftInMinutes(this.reportSumary).toString());
   }
 
 }
