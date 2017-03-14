@@ -61,7 +61,8 @@ export class ReportUtils {
 
     public static formatShareMessage(report: ReportModel, date: Date): string {
         moment.locale('pt-br');
-        let reportMessage = `Meu relatório ${moment(date).format('MMM YYYY')} :
+        let reportMessage = 
+        `${ReportUtils.formatShareTitle(date)}:
         - Horas: ${this.formatHours(report.hours, report.minutes)}
         - Publicações: ${this.formatNumber(parseInt(report.publications))}
         - Vídeos: ${this.formatNumber(parseInt(report.videos))}
@@ -69,6 +70,10 @@ export class ReportUtils {
         - Estudos:  ${this.formatNumber(parseInt(report.studies))}
         `;
         return reportMessage;
+    }
+
+    public static formatShareTitle(date: Date): string {
+        return `Relatório de ${moment(date).format('MMM YYYY')}`;
     }
 
     public static getHoursInMinutes(model: ReportModel) {

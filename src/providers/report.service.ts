@@ -38,7 +38,7 @@ export class ReportService {
     let reportsOrdered: ReportModel[] = await this.loadAllReports(date);
     return new Promise<ReportModel[]>((resolve, reject) => {
       if (reportsOrdered) {
-        reportsOrdered.sort((r1, r2) => parseInt(r2.id) - parseInt(r1.id));
+        reportsOrdered.sort((r1, r2) => parseInt(r2.year + r2.day) - parseInt(r1.year + r1.day));
       }
       resolve(reportsOrdered);
     });

@@ -3,10 +3,9 @@
     <button ion-button menuToggle>
       <ion-icon name="menu" color="orangeColor"></ion-icon>
     </button>
-    <ion-title  no-padding>
-      <ion-datetime  no-padding  displayFormat="MMMM YYYY" [(ngModel)]="datePickerValue" (ionChange)="onDatePickerChange()" 
-      cancelText="Cancelar" doneText="OK" [max]="maxDatePickerValue"
-      monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"></ion-datetime>
+    <ion-title no-padding>
+      <ion-datetime no-padding displayFormat="MMMM YYYY" [(ngModel)]="datePickerValue" (ionChange)="onDatePickerChange()" cancelText="Cancelar"
+        doneText="OK" [max]="maxDatePickerValue" monthNames="Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro"></ion-datetime>
     </ion-title>
     <ion-buttons end>
       <button ion-button icon-only end (click)="onActivityCounterClick()">
@@ -60,11 +59,19 @@
     <ion-item>
       Minha meta é {{ getHoutTarget() }} hrs
     </ion-item>
-    <ion-item>
-      Preciso de {{ getHourPerDay() }} hrs por dia
-    </ion-item>
-    <ion-item>
-      Faltam {{ getHoursLeft() }} hrs para acabar
+    <ion-item-group *ngIf="showStatistics">
+      <ion-item>
+        Preciso de {{ getHourPerDay() }} hrs por dia
+      </ion-item>
+      <ion-item>
+        Faltam {{ getHoursLeft() }} hrs para acabar
+      </ion-item>
+    </ion-item-group>
+    <ion-item *ngIf="!showStatistics">
+      <button color="navBarColor" ion-button full icon-right padding>
+        Transferir minutos
+        <ion-icon name="arrow-forward"></ion-icon>
+        </button>
     </ion-item>
   </ion-list>
 

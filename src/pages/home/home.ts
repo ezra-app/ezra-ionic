@@ -1,6 +1,7 @@
-import { StatisticsService } from '../../providers/statistics-service';
 import { ReportModel } from '../../model/report-model';
+import { Settings } from '../../model/settings-model';
 import { ReportService } from '../../providers/report.service';
+import { StatisticsService } from '../../providers/statistics-service';
 import { ReportListPage } from '../report-list/report-list';
 import { AppConstants } from './../../model/app-contants';
 import { ReportUtils } from './../../providers/report-utils';
@@ -38,18 +39,25 @@ export class HomePage {
   dateControl: Date = new Date();
   datePickerValue: string;
   maxDatePickerValue: string = moment(new Date()).format(AppConstants.DATE_PICKER_FORMAT);
+  showStatistics: boolean = true;
+  settings: Settings;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public modalCtrl: ModalController, public reportService: ReportService,
     public viewCtrl: ViewController, public events: Events, public toastCtrl: ToastController,
     public statisticsService: StatisticsService) {
-
+    
+    this.settings = this.statisticsService.settings;
     this.datePickerValue = moment(this.dateControl).format(AppConstants.DATE_PICKER_FORMAT);
     this.loadReports();
     events.subscribe(AppConstants.EVENT_REPORT_UPDATED, () => {
       this.dateControl = moment(this.datePickerValue, AppConstants.DATE_PICKER_FORMAT).toDate();
+      this.showStatistics = this.dateControl.getMonth() == new Date().getMonth() && this.dateControl.getFullYear() == new Date().getFullYear();
+
       this.loadReports();
     });
+
+    this.showStatistics = this.dateControl.getMonth() == new Date().getMonth() && this.dateControl.getFullYear() == new Date().getFullYear();
   }
 
   loadReports(): void {
@@ -68,7 +76,7 @@ export class HomePage {
     let modal = this.modalCtrl.create(EditionPage, { reportDate: this.dateControl });
     modal.present();
   }
-  
+
   formatNumber(value: number): string {
     return ReportUtils.formatNumber(value);
   }
@@ -108,12 +116,13 @@ export class HomePage {
 
   onShareButtonClick() {
     SocialSharing.shareViaWhatsApp(ReportUtils.formatShareMessage(this.reportSumary, this.dateControl)).then(() => {
-    }).catch((err) => {});
+    }).catch((err) => { });
   }
 
   onEmailButtonClick() {
-    SocialSharing.shareViaEmail(ReportUtils.formatShareMessage(this.reportSumary, this.dateControl), "Meu Relatório", ["betolinck@gmail.com"]).then(() => {
-    }).catch((err) => {});
+    SocialSharing.shareViaEmail(ReportUtils.formatShareMessage(this.reportSumary, this.dateControl),
+      ReportUtils.formatShareTitle(this.dateControl), [this.statisticsService.settings.share.email]).then(() => {
+      }).catch((err) => { });
   }
 
   onSwipe(event: Gesture) {
@@ -141,7 +150,7 @@ export class HomePage {
     return this.statisticsService.getHoursTarget();
   }
 
-  getHoursLeft():  string {
+  getHoursLeft(): string {
     return ReportUtils.formatHours('0', this.statisticsService.getHoursLeftInMinutes(this.reportSumary).toString());
   }
 

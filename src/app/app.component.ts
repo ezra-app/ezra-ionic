@@ -24,7 +24,7 @@ export class MyApp {
     this.pages = [
       { title: 'Início', component: HomePage, icon: "home" },
       { title: 'Detalhe', component: ReportListPage, icon: "list" },
-      { title: 'Metas', component: GoalsPage, icon: "football" },
+      // { title: 'Metas', component: GoalsPage, icon: "football" },
       { title: 'Configurações', component: SettingsPage, icon: "settings" }
     ];
 
