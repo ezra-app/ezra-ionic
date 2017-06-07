@@ -9,4 +9,4 @@ Aplicativo para relatório de campo feito em Ionic Framework
 - ionic serve
 
 # Demo
-[cryptic-lake-75401.herokuapp.com](cryptic-lake-75401.herokuapp.com)
+[https://cryptic-lake-75401.herokuapp.com/](https://cryptic-lake-75401.herokuapp.com/)
